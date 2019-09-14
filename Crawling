@@ -1,3 +1,5 @@
+一，下载网页:
+
 import urllib2
 def download ( url ) :
 	return urllib2. urlopen (url) . read ( )
@@ -15,3 +17,30 @@ def download ( url ):
 	return html
 
 现在， 当出现下载错误时， 该函数能够捕获到异常， 然后返回None 。
+
+
+
+1,重试下载
+
+2. 设置用户代理
+def download (url, user_agent＝ ’wswp’，num_retries=2):
+    print’ Downloading:’，url
+    headers =｛ ’User-agent’: user_agent }
+    request = urllib2.Request( u r l , he ade r s =headers)
+try:
+    html = urllib2.urlopen(request).read( )
+except urllib2.URLError as e:
+    print ’Download error：’ ，e.reason
+    html = None
+    if num_retries > 0:
+        if hasattr(e, ’code’ ）and 500 <= e.code < 600:
+	    # retry 5XX HTTP errors
+	    return download(url, user_agent, num_retries-1)
+return html
+
+
+
+
+
+
+
