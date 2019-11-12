@@ -325,6 +325,895 @@ print(list_all)
 ________________________________________________________________________________________________
 
 
+练习-一键下电影
+ 
+第一步：分析问题，明确目标
+我们想要实现这样的功能：用户输入喜欢的电影名字，程序即可在电影天堂(https://www.ygdy8.com)爬取电影所对应的下载链接，并将下载链接打印出来。
+ 
+【讲解】
+我们知道爬虫是模拟人在浏览器的动作批量获取有价值的信息，那对于这道题，我们先手动操作下，看看人是如何实现这个过程的。
+首先，打开电影天堂(https://www.ygdy8.com) ， 在”搜索“处，填写一部电影名，以”无名之辈“为例，然后，我们进入了“搜索结果”页面，最后，在下载页面滑到最下方，找到了下载地址。
+人工操作的步骤，我们是不是可以将其分为 “输名字 - 查搜索结果 - 进入下载页面 - 找到下载链接” ？ 呐，我们就让我们的爬虫也这样子走就可以了对吧～ 
+ 
+第二步：分析讲解
+“输名字 - 查搜索结果 - 进入下载页面 - 找到下载链接”
+我们是这样找到下载链接的，那只要让我们的爬虫也走这样的步骤， 就可以达成我们的目标啦
+ 
+【讲解】
+步骤一
+“输名字”，学过基础课的同学一定可以想到，用input()就可以啦。
+步骤二
+”搜索结果页面“ 这里面涉及到一个坑，我们要一起填上。 
+输入不同的电影名，观察搜索结果页面的URL：
+《无名之辈》的搜索结果URL：http://s.ygdy8.com/plus/so.php?typeid=1&keyword=%CE%DE%C3%FB%D6%AE%B1%B2
+《神奇动物》的搜索结果URL：http://s.ygdy8.com/plus/so.php?typeid=1&keyword=%C9%F1%C6%E6%B6%AF%CE%EF
+《狗十三》 的搜索结果URL：http://s.ygdy8.com/plus/so.php?typeid=1&keyword=%B9%B7%CA%AE%C8%FD
+观察URL，不难发现：http://s.ygdy8.com/plus/so.php?typeid=1&keyword=() 这些都是一样的，只不过不同的电影名对应URL后面加了一些我们看不懂的字符
+请阅读以下代码，注意注释哦：
+
+
+
+
+a= '无名之辈'
+b= a.encode('gbk')
+# 将汉字，用gbk格式编码，赋值给b
+print(quote(b))
+# quote()函数，可以帮我们把内容转为标准的url格式，作为网址的一部分打开
+
+
+输出结果是：
+%CE%DE%C3%FB%D6%AE%B1%B2
+
+
+
+
+记得在本地IDE上试着敲下哦，可以把‘无名之辈’换成神奇动物和狗十三，看看输出结果是否和对应的编码一致。
+诶，发现的确是一致的，那我们一起来解读这段代码是怎么实现的呢。
+ 
+注释中提到了gbk格式编码，那gbk是什么呢？
+_GBK编码_ <br/>
+ GBK是中国标准，只在中国使用，并没有表示大多数其它国家的编码；
+ 而各国又陆续推出各自的编码标准，互不兼容，非常不利于全球化发展。
+ 于是后来国际组织发行了一个全球统一编码表，把全球各国文字都统一在一个编码标准里，名为Unicode。
+由此我们知道，想把中文转换成url格式，需要先用encode('gbk')将其转成gbk编码，然后再用quote()把它转化成url的一部分。
+然后再将它与[http://s.ygdy8.com/plus/so.php?typeid=1&keyword=]()拼接起来就是电影的搜索结果页面啦～ 
+好，总结下上面的这个知识点，如何建立“输入电影名”与“搜索结果页面”的联系： 
+ __中文 - gbk - url - 拼接__
+这样我们就把完整的搜索结果页面找到并提取出来了。<br>
+ 
+步骤三 + 步骤四
+”进入下载页面“ 与 “找到下载链接” 就是解析网页定位啦，利用find() 和 find_all()，都是你会的内容，加油呀～
+ 
+第三步：书写代码吧 (｡▰‿‿▰｡) ❤
+ 
+前两步我们已经捋顺了思路，还填了一个小坑，现在要自己敲代码咯，对转换格式编码的代码记不清的同学，可以偷偷看下提示哦。
+ 
+【提示】
+将汉字，用gbk格式编码，赋值，这时需要encode()，还需要用到quote()函数，可以帮我们把内容转为标准的url格式，作为网址的一部分打开。
+定位下载链接还是要用到find()哦～ 
+有些电影没有下载链接，记得加个判断呀～
+ 
+【解答】
+
+
+import requests
+from bs4 import BeautifulSoup
+from urllib.request import quote
+#quote()函数，可以帮我们把内容转为标准的url格式，作为网址的一部分打开
+
+
+movie = input('你想看什么电影呀？')
+gbkmovie = movie.encode('gbk')
+#将汉字，用gbk格式编码，赋值给gbkmovie
+url = 'http://s.ygdy8.com/plus/so.php?typeid=1&keyword='+quote(gbkmovie)
+#将gbk格式的内容，转为url，然后和前半部分的网址拼接起来。
+res = requests.get(url)
+#下载××电影的搜索页面
+res.encoding ='gbk'
+#定义res的编码类型为gbk
+soup_movie = BeautifulSoup(res.text,'html.parser')
+#解析网页
+urlpart = soup_movie.find(class_="co_content8").find_all('table')
+# print(urlpart)
+
+
+if urlpart:
+    urlpart = urlpart[0].find('a')['href']
+    urlmovie = 'https://www.ygdy8.com/' + urlpart
+    res1 = requests.get(urlmovie)
+    res1.encoding = 'gbk'
+    soup_movie1 = BeautifulSoup(res1.text,'html.parser')
+    urldownload = soup_movie1.find('div',id="Zoom").find('span').find('table').find('a')['href']
+    print(urldownload)
+else:
+    print('没有' + movie)
+    # 有些电影是查询不到没下载链接的，因此加了个判断
+
+
+
+
+
+
+________________________________________________________________________________________________
+
+
+第5关
+练习-歌词爬取
+第一步：分析问题，明确结果
+问题需求就是把关卡内的代码稍作修改，将周杰伦前五页歌曲的歌词都爬取下来，结果就是全部展示打印出来。
+ 
+【讲解】
+问题需求就是把关卡内的代码稍作修改，将周杰伦前五页歌曲的歌词都爬取下来，结果就是全部展示打印出来。
+ 
+第二步：写代码
+ 
+【提示】
+Network - XHR-client_search - Headers - Query String Parameters , 观察里面参数的变化
+ 
+
+【解答】
+import requests
+import json
+# 引用requests,json模块
+
+url = 'https://c.y.qq.com/soso/fcgi-bin/client_search_cp'
+
+headers = {
+    'referer':'https://y.qq.com/portal/search.html',
+    # 请求来源
+    'user-agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36'
+    # 标记了请求从什么设备，什么浏览器上发出
+    }
+
+for x in range(5):
+    
+    params = {
+    'ct':'24',
+    'qqmusic_ver': '1298',
+    'new_json':'1',
+    'remoteplace':'sizer.yqq.lyric_next',
+    'searchid':'94267071827046963',
+    'aggr':'1',
+    'cr':'1',
+    'catZhida':'1',
+    'lossless':'0',
+    'sem':'1',
+    't':'7',
+    'p':str(x+1),
+    'n':'10',
+    'w':'周杰伦',
+    'g_tk':'1714057807',
+    'loginUin':'0',
+    'hostUin':'0',
+    'format':'json',
+    'inCharset':'utf8',
+    'outCharset':'utf-8',
+    'notice':'0',
+    'platform':'yqq.json',
+    'needNewCode':'0'  
+    }
+      
+    res = requests.get(url, params = params)
+    #下载该网页，赋值给res
+    jsonres = json.loads(res.text)
+    #使用json来解析res.text
+    list_lyric = jsonres['data']['lyric']['list']
+    #一层一层地取字典，获取歌词的列表
+
+    for lyric in list_lyric:
+    #lyric是一个列表，x是它里面的元素
+        print(lyric['content'])
+    #以content为键，查找歌词
+
+ 
+
+
+
+________________________________________________________________________________________________
+
+
+练习-头条粉丝
+第一步： 阅读代码
+作为头号粉丝，只爬取歌词不能满足迷妹迷弟们～我们还想要爬取自己喜欢的歌手音乐信息～
+现在，请你阅读关卡内代码，思考应该如何修改它。
+ 
+【提示】
+阅读代码就可以了。
+
+
+
+
+import requests, json
+#引用requests，json模块
+
+url = 'https://c.y.qq.com/soso/fcgi-bin/client_search_cp'
+for x in range(5):
+    
+    params = {
+    'ct':'24',
+    'qqmusic_ver': '1298',
+    'new_json':'1',
+    'remoteplace':'txt.yqq.song',
+    'searchid':'70717568573156220',
+    't':'0',
+    'aggr':'1',
+    'cr':'1',
+    'catZhida':'1',
+    'lossless':'0',
+    'flag_qc':'0',
+    'p':str(x+1),
+    'n':'20',
+    'w':'周杰伦',
+    'g_tk':'714057807',
+    'loginUin':'0',
+    'hostUin':'0',
+    'format':'json',
+    'inCharset':'utf8',
+    'outCharset':'utf-8',
+    'notice':'0',
+    'platform':'yqq.json',
+    'needNewCode':'0'    
+    }
+    # 将参数封装为字典
+    res_music = requests.get(url,params=params)
+    # 调用get方法，下载这个列表
+    json_music = res_music.json()
+    # 使用json()方法，将response对象，转为列表/字典
+    list_music = json_music['data']['song']['list']
+    # 一层一层地取字典，获取歌单列表
+    for music in list_music:
+    # list_music是一个列表，music是它里面的元素
+        print(music['name'])
+        # 以name为键，查找歌曲名
+        print('所属专辑：'+music['album']['name'])
+        # 查找专辑名
+        print('播放时长：'+str(music['interval'])+'秒')
+        # 查找播放时长
+        print('播放链接：https://y.qq.com/n/yqq/song/'+music['mid']+'.html\n\n')
+        # 查找播放链接
+
+
+
+
+运行右侧代码发现我们只爬取到了周杰伦的歌曲信息，那么想做到一键换成任何喜欢的歌手该怎么做呢？ 我们发现params里面的`w`对应的是歌手名字，那么我们就可以用input来替换掉呀～
+ 
+ 
+第二步： 修改代码
+作为头号粉丝，只爬取歌词不能满足迷妹迷弟们～我们还想要爬取自己喜欢的歌手音乐信息～
+现在，请你尝试修改代码。借助input()函数，实现爬取任意一个歌手的音乐信息。
+ 
+【提示】
+singer = input('你最喜欢的歌手是谁呀？')
+
+
+import requests, json
+
+# 引用requests模块
+url = 'https://c.y.qq.com/soso/fcgi-bin/client_search_cp'
+singer = input('你喜欢的歌手是谁呢？')
+for x in range(6):
+    
+    params = {
+    'ct':'24',
+    'qqmusic_ver': '1298',
+    'new_json':'1',
+    'remoteplace':'txt.yqq.song',
+    'searchid':'70717568573156220',
+    't':'0',
+    'aggr':'1',
+    'cr':'1',
+    'catZhida':'1',
+    'lossless':'0',
+    'flag_qc':'0',
+    'p':str(x+1),
+    'n':'20',
+    'w':singer,
+    'g_tk':'714057807',
+    'loginUin':'0',
+    'hostUin':'0',
+    'format':'json',
+    'inCharset':'utf8',
+    'outCharset':'utf-8',
+    'notice':'0',
+    'platform':'yqq.json',
+    'needNewCode':'0'    
+    }
+    # 将参数封装为字典
+    res_music = requests.get(url,params=params)
+    # 调用get方法，下载这个列表
+    json_music = res_music.json()
+    # 使用json()方法，将response对象，转为列表/字典
+    list_music = json_music['data']['song']['list']
+    # 一层一层地取字典，获取歌单列表
+    for music in list_music:
+    # list_music是一个列表，music是它里面的元素
+        print(music['name'])
+        # 以name为键，查找歌曲名
+        print('所属专辑：'+music['album']['name'])
+        # 查找专辑名
+        print('播放时长：'+str(music['interval'])+'秒')
+        # 查找播放时长
+        print('播放链接：https://y.qq.com/n/yqq/song/'+music['mid']+'.html\n\n')
+        # 查找播放链接
+
+
+
+ ________________________________________________________________________________________________
+
+
+练习-一键查快递
+第一步：分析需求，明确目标
+ 
+实现功能：用户输入快递名称和单号，程序即可在快递100(https://www.kuaidi100.com/)爬取最新物流状态，并将其打印出来。
+ 
+【讲解】
+先进入快递100(https://www.kuaidi100.com/) 感受下手动搜索的流程，
+如图，红框框里的是我们需要输入与想要提取的信息：
+ 
+第二步：书写代码吧 (｡▰‿‿▰｡) ❤
+如果没思路，可以偷偷看下提示哦～ 
+ 
+【提示】
+ Network - query?type...  - Headers - Query String Parameters , 观察里面参数的变化～
+ 服务器返回的内容，是json的格式。我们可以用处理列表、处理字典的手段来提取物流状态哦
+
+
+
+
+import requests
+#调用requests模块，负责上传和下载数据
+
+logisticsName = input('你的快递是什么物流呀？')
+courierNum = input('你的快递单号是什么呀？')
+
+url = 'https://www.kuaidi100.com/query?'
+#使用get需要一个链接
+
+params = {
+          'type': logisticsName,
+          'postid': courierNum,
+          'temp': '0.9661515218223198',
+          'phone':''
+          }
+#将需要get的内容，以字典的形式记录在params内
+
+r = requests.get(url, params=params)
+#get需要输入两个参数，一个是刚才的链接，一个是params，返回的是一个Response对象
+result = r.json()
+
+print ('最新物流状态‘：'+ result['data'][0]['context'])
+#记得观察preview里面的参数哦
+ 
+
+
+
+
+________________________________________________________________________________________________
+
+
+
+第6关
+练习-储存电影信息
+第一步：分析问题，明确结果
+问题需求就是把豆瓣TOP250里面的 序号/电影名/评分/推荐语/链接 都爬取下来，结果是存储在csv和Excel中
+ 
+【讲解】
+问题需求就是把豆瓣TOP250里面的 序号/电影名/评分/推荐语/链接 都爬取下来，结果是存储在csv和Excel中
+ 
+第二步：书写爬虫代码
+回顾下第三关的爬虫代码
+
+
+
+import requests, random, bs4
+
+for x in range(10):
+    url = 'https://movie.douban.com/top250?start=' + str(x*25) + '&filter='
+    res = requests.get(url)
+    bs = bs4.BeautifulSoup(res.text, 'html.parser')
+    bs = bs.find('ol', class_="grid_view")
+    for titles in bs.find_all('li'):
+        num = titles.find('em',class_="").text
+        title = titles.find('span', class_="title").text
+        comment = titles.find('span',class_="rating_num").text
+        url_movie = titles.find('a')['href']
+        
+        if titles.find('span',class_="inq") != None:
+            tes = titles.find('span',class_="inq").text
+            print(num + '.' + title + '——' + comment + '\n' + '推荐语：' + tes +'\n' + url_movie)
+        else:
+            print(num + '.' + title + '——' + comment + '\n' +'\n' + url_movie)
+
+
+
+第三步： 完善代码，用Excel存储信息
+要存储在Excel中呢，需要先创建工作表，重命名，再设置表头，把爬取的信息写成列表，然后用append函数多行写入Excel，最后命名保存这个Excel 文件。
+请改写下方的爬虫代码，实现使用Excel存储信息。
+ 
+
+import requests, random, bs4, openpyxl
+
+wb=openpyxl.Workbook()  
+#创建工作薄
+sheet=wb.active 
+#获取工作薄的活动表
+sheet.title='movies' 
+#工作表重命名
+sheet['A1'] ='序号'       #加表头，给A1单元格赋值
+sheet['B1'] ='电影名'     #加表头，给B1单元格赋值
+sheet['C1'] ='评分'      #加表头，给C1单元格赋值
+sheet['D1'] ='推荐语'     #加表头，给D1单元格赋值
+sheet['E1'] ='链接'      #加表头，给E1单元格赋值
+
+for x in range(10):
+    url = 'https://movie.douban.com/top250?start=' + str(x*25) + '&filter='
+    res = requests.get(url)
+    bs = bs4.BeautifulSoup(res.text, 'html.parser')
+    bs = bs.find('ol', class_="grid_view")
+    for titles in bs.find_all('li'):
+        num = titles.find('em',class_="").text
+        title = titles.find('span', class_="title").text
+        comment = titles.find('span',class_="rating_num").text
+        url_movie = titles.find('a')['href']
+        
+        if titles.find('span',class_="inq") != None:
+            tes = titles.find('span',class_="inq").text
+            sheet.append([num, title, comment, tes, url_movie])
+            # 把num, title, comment, tes和url_movie写成列表，用append函数多行写入Excel
+            print(num + '.' + title + '——' + comment + '\n' + '推荐语：' + tes +'\n' + url_movie)
+        else:
+            sheet.append([num, title, comment, None,url_movie])
+            print(num + '.' + title + '——' + comment + '\n' +'\n' + url_movie)
+        
+          
+wb.save('movieTop250.xlsx')            
+#最后保存并命名这个Excel文件
+
+
+ 
+ 第四步：另辟蹊径，用csv格式存储信息
+思考下如何用csv创建写入存储呢？
+ 
+请修改下方代码，实现使用csv存储信息。
+
+
+
+import requests,  random, bs4, csv
+#引用csv模块。
+csv_file=open('movieTop250.csv', 'w', newline='')
+#调用open()函数打开csv文件，传入参数：文件名“movieTop250.csv”、写入模式“w”、newline=''
+
+
+ 【解答】
+
+import requests,  random, bs4, csv
+#引用csv模块。
+csv_file=open('movieTop250.csv', 'w', newline='')
+#调用open()函数打开csv文件，传入参数：文件名“movieTop250.csv”、写入模式“w”、newline=''。
+writer = csv.writer(csv_file)
+# 用csv.writer()函数创建一个writer对象。
+writer.writerow(['序号', '电影名', '评分', '推荐语', '链接'])
+#调用writer对象的writerow()方法，可以在csv文件里写入title:'序号', '电影名', '评分', '推荐语', '链接'
+
+for x in range(10):
+    url = 'https://movie.douban.com/top250?start=' + str(x*25) + '&filter='
+    res = requests.get(url)
+    bs = bs4.BeautifulSoup(res.text, 'html.parser')
+    bs = bs.find('ol', class_="grid_view")
+    for titles in bs.find_all('li'):
+        num = titles.find('em',class_="").text
+        title = titles.find('span', class_="title").text
+        comment = titles.find('span',class_="rating_num").text
+        url_movie = titles.find('a')['href']
+        
+        if titles.find('span',class_="inq") != None:
+            tes = titles.find('span',class_="inq").text
+            # 把num, title, comment, tes和url_movie写成列表，用append函数多行写入Excel
+            writer.writerow([num + '.' + title + '——' + comment + '\n' + '推荐语：' + tes +'\n' + url_movie])
+        else:
+            writer.writerow([num + '.' + title + '——' + comment + '\n' +'\n' + url_movie])
+        
+csv_file.close()
+
+
+
+
+
+________________________________________________________________________________________________
+
+
+
+
+第7关
+练习-做个测单词的小工具
+第一步：分析需求，明确目标
+扇贝网：https://www.shanbay.com/已经有一个测单词量的功能，我们要做的就是把这个功能复制下来，并且做点改良，搞一个网页版没有的功能 ———— 自动生成错词本。
+在这一步，请阅读文档的同时打开浏览器的扇贝网，跟着我一步步来。
+ 
+【讲解】
+这里是扇贝网的测单词量的界面：想要复制功能，就先做分析，这个网页是怎样的工作流程。
+所以，先体验全程
+先看源代码里是否有我们的单词。倘若有，就用find()/find_all()定位提取需要的数据；
+没有的话，就要调用【检查】-【Network】 - 【XHR】 - 找数据。
+在Headers里看网址，在Preview里看内容。
+ 
+category/这一个XHR，用的是Get请求方式，访问了网址https://www.shanbay.com/api/v1/vocabtest/category/下载了一个字典。其中“data”里面，藏了十个元素。这十个元素，里面对应的内容，就是我们最开始要选择的“词汇范围”。十个元素，每个里面都有两个内容。0是什么暂时还不知道，先放着。1是我们词汇范围没错。比如我们选择高考，那么在第2个元素里就有一个0是“NCEE”，有一个1是“高考”。
+ 
+我们接着看下一个XHR：
+在此，“NCEE”出现了两次：这个XHR的名字里面有“NCEE”，它访问的网址里面也有“NCEE”。
+这就揭示了一种对应关系：当我们选择“高考”词库，那么下一个XHR，访问的网址就会是用“NCEE”来结尾。可以多试几个词库验证下我们的猜测，的确里面的对应关系是一致的。考研和NGEE一组，四级和CET4一组，六级和CET6一组。
+ 
+第1个XHR，所访问的网址规律就是：'https://www.shanbay.com/api/v1/vocabtest/vocabularies/?category='+'你选择的词库，对应的代码'。
+它下载到的是一个字典。字典里，包含了用来测试词汇量的50个单词。
+第0，它先给出单词。
+第1，它给出四个不同的翻译，每个翻译都有一个对应的pk值和rank值。
+第2，它再给出一组pk值和rank值。它们，和正确翻译里面的pk值与rank值一致。
+到这里，我们就完成了至关重要的“需求分析”这个步骤。
+ 
+ 
+第二步：分步讲解，书写代码 (｡▰‿‿▰｡) ❤
+
+ 
+【讲解】
+下面，我将带你一步步完成代码。
+（0）. 选择题库。
+写这个程序，要用到requests模块。
+先用requests下载链接，再用res.json()解析下载内容。
+让用户选择想测的词库，输入数字编号，获取题库的代码。
+提示：记得给input前面加一个int()来转换数据类型
+
+
+【解答】
+
+
+import requests
+
+
+lin=requests.get('https://www.shanbay.com/api/v1/vocabtest/category/')  #先用requests下载链接。
+js_link = lin.json()                                                    #解析下载得到的内容。
+bianhao = int(input('''请输入你选择的词库编号，按Enter确认
+1，GMAT  2，考研  3，高考  4，四级  5，六级
+6，英专  7，托福  8，GRE  9，雅思  10，任意
+>'''))
+#让用户选择自己想测的词库，输入数字编号。int()来转换数据类型
+ciku = js_link['data'][bianhao-1][0]
+print(ciku)
+
+ 
+
+（1）. 根据选择的题库，获取50个单词。
+第0步我们已经拿到链接，这步直接用requests去下载，re.json()解析即可。
+
+
+
+ 解答：
+test = requests.get('https://www.shanbay.com/api/v1/vocabtest/vocabularies/?category='+ciku)    #下载用于测试的50个单词。
+words = test.json()                                                                             #对测试的单词进行解析。
+print(words)
+
+
+
+
+（2）. 让用户选择认识的单词：此处，要分别记录下用户认识哪些，不认识哪些。
+已经有了单词数据，提取出来让用户识别，并记录用户认识哪些不认识哪些，至少2个list来记录。50个单词，记得要用循环。用户手动输入自己的选择，用input() 。我们要识别用户的输入，并基于此决定把这个单词放进哪个list，需要用if语句。
+提示：当一个元素特别长的时候，给代码多加一个list。
+提示：加个换行，优化用户视角。
+新增一个list，用于统计用户认识的单词
+创建一个空的列表，用于记录用户认识的单词。
+创建一个空的列表，用于记录用户不认识的单词。
+启动一个循环，循环的次数等于单词的数量。
+记得加一个\n，用于
+让用户输入自己是否认识。
+ 如果用户认识：
+ 就把这个单词，追加进列表words_knows。
+  否则
+ 就把这个单词，追加进列表not_knows。
+打印一个统计数据：这么多单词，认识几个，认识的有哪些？
+
+
+
+
+danci = []
+#新增一个list，用于统计用户认识的单词
+words_knows = []
+not_knows = []
+print ('测试现在开始。如果你认识这个单词，请输入Y，否则直接敲Enter：')
+n=0
+for x in words['data']:
+    n=n+1
+    print ("\n第"+str(n)+'个：'+x['content'])
+    #加一个\n，用于换行。
+    answer = input('认识请敲Y，否则敲Enter：')
+    if answer == 'Y':
+        danci.append(x['content'])
+        #把用户认识的单词，追加进danci这个list。
+        words_knows.append(x)
+    else:
+        not_knows.append(x)
+
+
+print ('\n在上述'+str(len(words['data']))+'个单词当中，有'+str(len(danci))+'个是你觉得自己认识的，它们是：')
+print(danci)
+
+
+
+
+
+（3）. 对于用户认识的单词，给选择题让用户做：此处要记录用户做对了哪些，做错了哪些。这一步是第0步和第2步的组合——涉及到第0步中的选择，也涉及到第2步的数据记录。
+提示： 面对冗长的字典列表相互嵌套，可以创建字典。
+
+
+print ('现在我们来检测一下，你有没有真正掌握它们：')
+wrong_words = []
+right_num = 0
+for y in words_knows:
+    print('\n\n'+'A:'+y['definition_choices'][0]['definition'])
+    #我们改用A、B、C、D，不再用rank值，下同
+    print('B:'+y['definition_choices'][1]['definition'])
+    print('C:'+y['definition_choices'][2]['definition'])
+    print('D:'+y['definition_choices'][3]['definition'])
+    xuanze = input('请选择单词\"'+y['content']+'\"的正确翻译：')
+    dic = {'A':y['definition_choices'][0]['rank'],'B':y['definition_choices'][1]['rank'],'C':y['definition_choices'][2]['rank'],'D':y['definition_choices'][3]['rank']} 
+    #我们创建一个字典，搭建起A、B、C、D和四个rank值的映射关系。
+    if dic[xuanze] == y['rank']:
+    #此时dic[xuanze]的内容，其实就是rank值，此时的代码含义已经和之前的版本相同了。
+        right_num += 1
+    else:
+        wrong_words.append(y)
+
+
+
+（4）. 生成报告：50个单词，不认识多少，认识多少，掌握多少，错了多少。
+生成报告主要有三部分：第0，是输出统计数据；第1，是打印错题集；第2，是把错题集保存到本地。
+
+
+
+import requests
+
+link = requests.get('https://www.shanbay.com/api/v1/vocabtest/category/')
+#先用requests下载链接。
+js_link = link.json()
+#解析下载得到的内容。
+bianhao = int(input('''请输入你选择的词库编号，按Enter确认
+1，GMAT  2，考研  3，高考  4，四级  5，六级
+6，英专  7，托福  8，GRE  9，雅思  10，任意
+>'''))
+#让用户选择自己想测的词库，输入数字编号。int()来转换数据类型
+ciku = js_link['data'][bianhao-1][0]
+#利用用户输入的数字编号，获取题库的代码。如果以输入“高考”的编号“3”为例，那么ciku的值就是，在字典js_link中查找data的值，data是一个list，查找它的第bianhao-1，也就是第2个元素，得到的依然是一个list，再查找该list的第0个元素。最后得到的就是我们想要的NCEE。
+test = requests.get('https://www.shanbay.com/api/v1/vocabtest/vocabularies/?category='+ciku)
+#下载用于测试的50个单词。
+words = test.json()
+#对test进行解析。
+danci = []
+#新增一个list，用于统计用户认识的单词
+words_knows = []
+#创建一个空的列表，用于记录用户认识的单词。
+not_knows = []
+#创建一个空的列表，用于记录用户不认识的单词。
+print ('测试现在开始。如果你认识这个单词，请输入Y，否则直接敲Enter：')
+n=0
+for x in words['data']:
+#启动一个循环，循环的次数等于单词的数量。
+    n=n+1
+    print ("\n第"+str(n)+'个：'+x['content'])
+    #加一个\n，用于换行。
+    answer = input('认识请敲Y，否则敲Enter：')
+    #让用户输入自己是否认识。
+    if answer == 'Y':
+    #如果用户认识：
+        danci.append(x['content'])
+        words_knows.append(x)
+        #就把这个单词，追加进列表words_knows。
+    else:
+    #否则
+        not_knows.append(x)
+        #就把这个单词，追加进列表not_knows。
+
+
+
+
+print ('\n在上述'+str(len(words['data']))+'个单词当中，有'+str(len(danci))+'个是你觉得自己认识的，它们是：')
+print(danci)
+
+
+
+
+print ('现在我们来检测一下，你有没有真正掌握它们：')
+wrong_words = []
+right_num = 0
+for y in words_knows:
+    print('\n\n'+'A:'+y['definition_choices'][0]['definition'])
+    #我们改用A、B、C、D，不再用rank值，下同
+    print('B:'+y['definition_choices'][1]['definition'])
+    print('C:'+y['definition_choices'][2]['definition'])
+    print('D:'+y['definition_choices'][3]['definition'])
+    xuanze = input('请选择单词\"'+y['content']+'\"的正确翻译（填写数字即可）：')
+    dic = {'A':y['definition_choices'][0]['rank'],'B':y['definition_choices'][1]['rank'],'C':y['definition_choices'][2]['rank'],'D':y['definition_choices'][3]['rank']} 
+    #我们创建一个字典，搭建起A、B、C、D和四个rank值的映射关系。
+    if dic[xuanze] == y['rank']:
+    #此时dic[xuanze]的内容，其实就是rank值，此时的代码含义已经和之前的版本相同了。
+        right_num += 1
+    else:
+        wrong_words.append(y)
+
+
+print ('现在，到了公布成绩的时刻:')
+print ('在'+str(len(words['data']))+'个'+js_link['data'][bianhao-1][1]+'词汇当中，你认识其中'+str(len(danci))+'个，实际掌握'+str(right_num)+'个，错误'+str(len(wrong_words))+'个。')
+#这是句蛮复杂的话，对照前面的代码和json文件你才能理解它。一个运行示例是：在50个高考词汇当中，你认识其中30个，实际掌握25个，错误5个。
+
+
+save = input ('是否打印并保存你的错词集？填入Y或N： ')
+#询问用户，是否要打印并保存错题集。
+if save == 'Y':
+#如果用户说是：
+    f = open('错题集.txt', 'a+')
+    #在当前目录下，创建一个错题集.txt的文档。        
+    print ('你记错的单词有：')
+    f.write('你记错的单词有：\n')
+    #写入"你记错的单词有：\n"
+    m=0
+    for z in wrong_words:
+    #启动一个循环，循环的次数等于，用户的错词数：
+        m=m+1
+        print (z['content'])
+        #打印每一个错词。
+        f.write(str(m+1) +'. '+ z['content']+'\n')
+        #写入序号，写入错词。           
+    print ('你不认识的单词有：')
+    f.write('你没记住的单词有：\n')
+    #写入"你没记住的单词有：\n"
+    s=0
+    for x in not_knows:
+    #启动一个循环，循环的次数等于，用户不认识的单词数。
+        print (x['content'])
+        #打印每一个不认识的单词。
+        f.write(str(s+1) +'. '+ x['content']+'\n')
+        #写入序号，写入用户不认识的词汇。 
+    print ('错词和没记住的词已保存至当前文件目录下，下次见！')
+    #告诉用户，文件已经保存好。
+    #在网页版终端运行时，文件会被写在课程的服务器上，你看不到，但它的确已经存在。
+else:
+#如果用户不想保存：
+    print('下次见！')
+    #输出“下次见！”
+
+
+
+
+
+________________________________________________________________________________________________
+
+
+三步：参考答案
+  import requests
+
+
+link = requests.get('https://www.shanbay.com/api/v1/vocabtest/category/')
+#先用requests下载链接。
+js_link = link.json()
+#解析下载得到的内容。
+bianhao = int(input('''请输入你选择的词库编号，按Enter确认
+1，GMAT  2，考研  3，高考  4，四级  5，六级
+6，英专  7，托福  8，GRE  9，雅思  10，任意
+>'''))
+#让用户选择自己想测的词库，输入数字编号。int()来转换数据类型
+ciku = js_link['data'][bianhao-1][0]
+#利用用户输入的数字编号，获取题库的代码。如果以输入“高考”的编号“3”为例，那么ciku的值就是，在字典js_link中查找data的值，data是一个list，查找它的第bianhao-1，也就是第2个元素，得到的依然是一个list，再查找该list的第0个元素。最后得到的就是我们想要的NCEE。
+test = requests.get('https://www.shanbay.com/api/v1/vocabtest/vocabularies/?category='+ciku)
+#下载用于测试的50个单词。
+words = test.json()
+#对test进行解析。
+danci = []
+#新增一个list，用于统计用户认识的单词
+words_knows = []
+#创建一个空的列表，用于记录用户认识的单词。
+not_knows = []
+#创建一个空的列表，用于记录用户不认识的单词。
+print ('测试现在开始。如果你认识这个单词，请输入Y，否则直接敲Enter：')
+n=0
+for x in words['data']:
+#启动一个循环，循环的次数等于单词的数量。
+    n=n+1
+    print ("\n第"+str(n)+'个：'+x['content'])
+    #加一个\n，用于换行。
+    answer = input('认识请敲Y，否则敲Enter：')
+    #让用户输入自己是否认识。
+    if answer == 'Y':
+    #如果用户认识：
+        danci.append(x['content'])
+        words_knows.append(x)
+        #就把这个单词，追加进列表words_knows。
+    else:
+    #否则
+        not_knows.append(x)
+        #就把这个单词，追加进列表not_knows。
+
+
+
+
+print ('\n在上述'+str(len(words['data']))+'个单词当中，有'+str(len(danci))+'个是你觉得自己认识的，它们是：')
+print(danci)
+
+
+
+
+print ('现在我们来检测一下，你有没有真正掌握它们：')
+wrong_words = []
+right_num = 0
+for y in words_knows:
+    print('\n\n'+'A:'+y['definition_choices'][0]['definition'])
+    #我们改用A、B、C、D，不再用rank值，下同
+    print('B:'+y['definition_choices'][1]['definition'])
+    print('C:'+y['definition_choices'][2]['definition'])
+    print('D:'+y['definition_choices'][3]['definition'])
+    xuanze = input('请选择单词\"'+y['content']+'\"的正确翻译（填写数字即可）：')
+    dic = {'A':y['definition_choices'][0]['rank'],'B':y['definition_choices'][1]['rank'],'C':y['definition_choices'][2]['rank'],'D':y['definition_choices'][3]['rank']} 
+    #我们创建一个字典，搭建起A、B、C、D和四个rank值的映射关系。
+    if dic[xuanze] == y['rank']:
+    #此时dic[xuanze]的内容，其实就是rank值，此时的代码含义已经和之前的版本相同了。
+        right_num += 1
+    else:
+        wrong_words.append(y)
+
+
+print ('现在，到了公布成绩的时刻:')
+print ('在'+str(len(words['data']))+'个'+js_link['data'][bianhao-1][1]+'词汇当中，你认识其中'+str(len(danci))+'个，实际掌握'+str(right_num)+'个，错误'+str(len(wrong_words))+'个。')
+#这是句蛮复杂的话，对照前面的代码和json文件你才能理解它。一个运行示例是：在50个高考词汇当中，你认识其中30个，实际掌握25个，错误5个。
+
+
+save = input ('是否打印并保存你的错词集？填入Y或N： ')
+#询问用户，是否要打印并保存错题集。
+if save == 'Y':
+#如果用户说是：
+    f = open('错题集.txt', 'a+')
+    #在当前目录下，创建一个错题集.txt的文档。        
+    print ('你记错的单词有：')
+    f.write('你记错的单词有：\n')
+    #写入"你记错的单词有：\n"
+    m=0
+    for z in wrong_words:
+    #启动一个循环，循环的次数等于，用户的错词数：
+        m=m+1
+        print (z['content'])
+        #打印每一个错词。
+        f.write(str(m+1) +'. '+ z['content']+'\n')
+        #写入序号，写入错词。           
+    print ('你不认识的单词有：')
+    f.write('你没记住的单词有：\n')
+    #写入"你没记住的单词有：\n"
+    s=0
+    for x in not_knows:
+    #启动一个循环，循环的次数等于，用户不认识的单词数。
+        print (x['content'])
+        #打印每一个不认识的单词。
+        f.write(str(s+1) +'. '+ x['content']+'\n')
+        #写入序号，写入用户不认识的词汇。 
+    print ('错词和没记住的词已保存至当前文件目录下，下次见！')
+    #告诉用户，文件已经保存好。
+    #在网页版终端运行时，文件会被写在课程的服务器上，你看不到，但它的确已经存在。
+else:
+#如果用户不想保存：
+    print('下次见！')
+    #输出“下次见！
+
+
+
+
+
+________________________________________________________________________________________________
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
