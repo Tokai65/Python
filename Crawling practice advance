@@ -1,0 +1,340 @@
+复习了所有知识点，一切都准备就绪，那就开始写属于你的网页吧！
+我已经把网页的HTML源代码准备好了，你直接在上面修改就好。
+现在，请把网页
+[这个书院不太冷5.0](https://localprod.pandateacher.com/python-manuscript/crawler-html/spider-men5.0.html)
+修改为你喜欢的模样。
+ 
+必做：
+- 修改网页标题
+- 增加至少一本书的描述
+- 修改网页底部
+ 
+选做：
+- 修改已有书籍的描述
+- 增加多本书的描述
+- 自由地在HTML文档上修改任意内容
+ 
+【提示】
+ 
+网页结构修改：
+为了让网页的结构更加清晰，可以把每一本书都写成一个`<div>`元素。
+细节的修改：
+书籍封面图片的URL，你可以试试用豆瓣书籍主页的图片。右键点击图片，然后选择【复制图片地址】(https://res.pandateacher.com/2019-01-12-21-30-00.png)
+ 
+【解答】
+你的书苑你做主。
+这是我给你的参考答案，你可以点开下面的链接看看：
+https://localprod.pandateacher.com/python-manuscript/crawler-html/exercise/01-01-test.html
+
+
+
+
+
+
+________________________________________________________________________________________________
+
+
+
+
+练习-博客爬虫
+
+题目要求：
+你需要爬取的是博客【人人都是蜘蛛侠】中，《未来已来（四）——Python学习进阶图谱》的所有文章评论，并且打印。
+
+文章URL:
+https://wordpress-edu-3autumn.localprod.forc.work/all-about-the-future_04/
+ 
+【提示】
+首先，记得调用requests库和BeautifulSoup模块
+然后，按照爬虫的四个步骤来写代码：（不需要写第3步存储数据）
+第0步：获取数据
+`requests.get()`
+第1步：解析数据
+`BeautifulSoup(网页源代码的字符串格式,'html.parser')`
+第2步：提取数据
+`find_all()`
+`for`循环遍历`list`
+`Tag.text`
+ 
+【解答】
+首先导入两个模块，然后按照获取数据、解析数据、提取数据一步一步写下来就可以啦~
+
+
+
+import requests # 调用requests库
+
+from bs4 import BeautifulSoup # 调用BeautifulSoup库
+
+destnation_url = 'https://wordpress-edu-3autumn.localprod.forc.work/all-about-the-future_04/'
+
+# 把网址复制给变量destnation_url
+
+destnation = requests.get (destnation_url) # 返回一个response对象，赋值给destnation
+
+soup = BeautifulSoup(destnation.text,'html.parser') # 把网页解析为BeautifulSoup对象
+
+comments = soup.find_all('div',class_= 'comment-content') #通过匹配属性提取出我们想要的元素
+
+for comment in comments: # 遍历列表，取出列表中的每一个值
+
+    print(comment.text) # 打印评论的文本
+
+
+________________________________________________________________________________________________
+
+
+练习-书店寻宝
+ 
+1.第一个小练习
+题目要求：你需要爬取的是网上书店(http://books.toscrape.com/)中所有书的分类类型，并且将它们打印出来。网页URL:http://books.toscrape.com/
+ 
+【提示】
+ 
+要找到就需要先找到所有的li标签，仔细看HTML源代码的结构，这里需要嵌套提取好几层：
+`find('ul',class_='nav').find('ul').find_all('li')`
+最终打印结果，可以使用`str.strip()`去除特殊字符串。
+比如，使用`.strip()`即可去掉'   我是吴枫\n'文字前面的空格与后面的换行。
+ 
+import requests
+from bs4 import BeautifulSoup
+
+
+res_bookstore = requests.get('http://books.toscrape.com/')
+bs_bookstore = BeautifulSoup(res_bookstore.text,'html.parser')
+list_kind = bs_bookstore.find('ul',class_='nav').find('ul').find_all('li') # 这里需要提取好几层
+
+
+for tag_kind in list_kind:
+    tag_name = tag_kind.find('a')
+    print(tag_name.text.strip()) # 去除特殊字符串，比如空格，\n，\t等等
+
+
+
+
+
+________________________________________________________________________________________________
+
+
+
+第二个小练习
+ 
+题目要求：你需要爬取的是网上书店[Books to Scrape](http://books.toscrape.com/)Travel这类书中，所有书的书名、评分、价格三种信息，并且打印提取到的信息。
+网页URL:http://books.toscrape.com/catalogue/category/books/travel_2/index.html
+在此，提取书名和评分都有一定难度，想不到怎么做？查看提示。
+ 
+【提示】
+1.提取书名：
+需要注意的是，`<a>`标签中的文字内容所显示的不是完整书名，完整的书名是`<a>`标签中，`<title>`属性的值。
+因此需要用到`tag['属性名']`来提取属性值。
+ 
+2.提取评分：
+需要注意的是，评分藏在了`<p>`标签的`<class>`属性中，它是`<class>`的第1个属性值。
+我们需要根据`<class>`的第0个属性值`<star-rating>`提出它的第1个属性值。
+
+
+import requests
+from bs4 import BeautifulSoup
+
+
+res_bookstore = requests.get('http://books.toscrape.com/catalogue/category/books/travel_2/index.html')
+bs_bookstore = BeautifulSoup(res_bookstore.text,'html.parser')
+list_books = bs_bookstore.find_all(class_='product_pod')
+for tag_books in list_books:
+    tag_name = tag_books.find('h3').find('a') # 找到a标签需要提取两次
+    list_star = tag_books.find('p',class_="star-rating")
+    # 这个p标签的class属性有两种："star-rating"，以及具体的几星比如"Two"。我们选择所有书都有的class属性："star-rating"
+    tag_price = tag_books.find('p',class_="price_color") # 价格比较好找，根据属性提取，或者标签与属性一起都可以
+    print(tag_name['title']) # 这里用到了tag['属性名']提取属性值
+    print('star-rating:',list_star['class'][1])
+    # 同样是用属性名提取属性值
+    # 用list_star['class']提取出来之后是一个由两个值组成的列表，如："['star-rating', 'Two']"，我们最终要提取的是这个列表的第1个值："Two"。
+    # 为什么是列表呢？因为这里的class属性有两个值。其实，在这个过程中，我们是使用class属性的第一个值提取出了第二个值。
+    print('Price:',tag_price.text, end='\n'+'------'+'\n') # 打印的时候，我加上了换行，为了让数据更加清晰地分隔开，当然你也可以不加。
+
+
+
+________________________________________________________________________________________________
+
+
+
+练习-博客文章-参考
+题目要求：你需要爬取的是博客(https://wordpress-edu-3autumn.localprod.forc.work/)，首页的四篇文章信息，并且打印提取到的信息。
+提取每篇文章的：
+- 文章标题
+- 发布时间
+- 文章链接
+网页URL:https://spidermen.cn/
+ 
+【提示】
+文章题目与URL的提取方式稍有不同：
+``` html
+<h2 class="entry-title">
+    <a href="https://wordpress-edu-3autumn.localprod.forc.work/all-about-the-future_04/" rel="bookmark">未来已来（四）——Python学习进阶图谱</a>
+</h2>
+```
+文章标题可以通过`<h2>`与`<class_="entry-title">`找到，并用`Tag.text`提取出。
+而文章URL必须定位到`<a>`元素才可以。
+ 
+
+import requests
+from bs4 import BeautifulSoup
+
+
+url_destnation = 'https://spidermen.cn/'
+res_destnation = requests.get (url_destnation)
+print(res_destnation.status_code) # 打印响应码
+
+
+bs_articles = BeautifulSoup(res_destnation.text,'html.parser')
+list_articles = bs_articles.find_all('header', class_ = "entry-header") # 首先找到每篇文章所在的相同的元素
+for tag_article in list_articles: # 遍历列表
+    tag_title = tag_article.find('h2',class_ = "entry-title") # 找文章标题
+    tag_url = tag_article.find('a',rel = "bookmark")  # 找文章链接
+    tag_date = tag_article.find('time',class_="entry-date published") # 找文章发布时间
+    print(tag_title.text,'发布于：',tag_date.text) # 打印文章标题与发布时间
+    print(tag_url['href'])  # 换行打印文章链接，需要使用属性名提取属性值
+
+
+
+
+________________________________________________________________________________________________
+
+练习-豆瓣爬虫
+ 第一步：分析问题，明确结果
+问题需求就是把豆瓣TOP250里面的 序号/电影名/评分/推荐语/链接 都爬取下来，结果就是全部展示打印出来
+ 
+【讲解】
+问题需求就是把豆瓣TOP250里面的 序号/电影名/评分/推荐语/链接 都爬取下来，结果就是全部展示打印出来
+ 
+第二步：思考要用到的知识
+要爬取“序号/电影名/评分/推荐语/链接”这些信息，我们已经学习了用requests.get()获取数据，BeautifulSoup库解析数据，find()和find_all()提取数据，还有呢，观察下，一共10页，我们还要加个for循环对吧～ 
+ 
+【讲解】
+接下来我们一起分析网页吧～
+进入首页 https://movie.douban.com/top250?start=0&filter=  ，打开检查工具，在Elements里查看这个网页，是什么结构。点击开发者工具左上角的小箭头，选中“肖申克的救赎”，这样就定位了电影名的所在位置，审查元素中显示`<span class="title">`：`<span>`标签内的文本，`class`属性；推荐语和评分也是如此，`<span class='ing'>`，`<span class='rating_num'>`；序号：`<em class>`，`<em>`标签内的文本，`class`属性；推荐语`<span class='ing'>`；链接是`<a>`标签里`href`的值。最后，它们最小共同父级标签，是`<li>`。
+我们再换个电影验证下找的规律是否正确。
+check后，我们再看一共10页，每页的url有什么相关呢？
+第1页：https://movie.douban.com/top250?start=0&filter=
+第3页：https://movie.douban.com/top250?start=50&filter=
+第7页：https://movie.douban.com/top250?start=150&filter=
+发现只有start后面是有变化哒，规律就是第N页，start=(N-1)*25 
+基于以上分析，我们有两种写爬虫的思路。
+思路一：先爬取最小共同父级标签 `<li>`，然后针对每一个父级标签，提取里面的序号/电影名/评分/推荐语/链接。
+思路二：分别提取所有的序号/所有的电影名/所有的评分/所有的推荐语/所有的链接，然后再按顺序一一对应起来。
+ 
+第三步：书写思路一代码
+先爬取最小共同父级标签`<li>`，然后针对每一个父级标签，提取里面的序号/电影名/评分/推荐语/链接
+
+
+import requests, random, bs4
+
+for x in range(10):
+    url = 'https://movie.douban.com/top250?start=' + str(x*25) + '&filter='
+    res = requests.get(url)
+    bs = bs4.BeautifulSoup(res.text, 'html.parser')
+    bs = bs.find('ol', class_="grid_view")
+    for titles in bs.find_all('li'):
+        num = titles.find('em',class_="").text
+        #查找序号
+        title = titles.find('span', class_="title").text
+        #查找电影名
+        tes = titles.find('span',class_="inq").text
+        #查找推荐语
+        comment = titles.find('span',class_="rating_num").text
+        #查找评分
+        url_movie = titles.find('a')['href']
+        
+        print(num + '.' + title + '——' + comment + '\n' + '推荐语：' + tes +'\n' + url_movie)
+       
+
+看着我们需要的信息一条条蹦出来，还是很兴奋哒ლ(❛◡❛✿)ლ 诶，到222条怎么停下来报错了哎，不要慌～ 
+
+
+
+
+      9         num = titles.find('em',class_="").text
+     10         title = titles.find('span', class_="title").text
+---> 11         tes = titles.find('span',class_="inq").text
+     12         comment = titles.find('span',class_="rating_num").text
+     13         url_movie = titles.find('a')['href']
+
+AttributeError: 'NoneType' object has no attribute 'text'
+
+
+看下报错信息“AttributeError: 'NoneType' object has no attribute 'text' ” ，定位到了tes这一行，这是推荐语呀，为什么会错呢？ 我们回归网页，发现第223个电影是《三块广告牌》，诶，它竟然没有推荐语，而空值是没办法做text文本转换的，因此报错了呢。
+那怎么解决呢，聪明的你一定想到啦～  Bingo，加一个判断就可以啦～ 
+修改过代码，我们再试一下哦～ 
+
+
+
+import requests, random, bs4
+
+for x in range(10):
+    url = 'https://movie.douban.com/top250?start=' + str(x*25) + '&filter='
+    res = requests.get(url)
+    bs = bs4.BeautifulSoup(res.text, 'html.parser')
+    bs = bs.find('ol', class_="grid_view")
+    for titles in bs.find_all('li'):
+        num = titles.find('em',class_="").text
+        title = titles.find('span', class_="title").text
+        comment = titles.find('span',class_="rating_num").text
+        url_movie = titles.find('a')['href']
+        
+        if titles.find('span',class_="inq") != None:
+            tes = titles.find('span',class_="inq").text
+            print(num + '.' + title + '——' + comment + '\n' + '推荐语：' + tes +'\n' + url_movie)
+        else:
+            print(num + '.' + title + '——' + comment + '\n' +'\n' + url_movie)
+
+
+好啦，250个电影的信息都抓取到了耶，而且我们发现，第223和244都没有推荐语，在网页查看下也确实没有呢。
+思路一我们已经代码实现啦，举起双手，打开，给自己放个小烟花🎆吧～
+那思路二对我们来说也是很轻松的事情啦～ 
+
+ 
+第四步：书写思路二代码
+分别提取所有的序号/所有的电影名/所有的评分/所有的推荐语/所有的链接，然后再按顺序一一对应起来。
+
+
+import requests
+# 引用requests模块
+from bs4 import BeautifulSoup
+for x in range(10):
+url = 'https://movie.douban.com/top250?start=' + str(x*25) + '&filter='
+res = requests.get(url)
+bs = BeautifulSoup(res.text, 'html.parser')
+tag_num = bs.find_all('div', class_="item")
+# 查找包含序号，电影名，链接的<div>标签
+tag_comment = bs.find_all('div', class_='star')
+# 查找包含评分的<div>标签
+tag_word = bs.find_all('span', class_='inq')
+# 查找推荐语
+print(len(tag_word),len(tag_num))
+
+list_all = []
+for x in range(len(tag_num)-1):
+if tag_num[x].text[2:5] == '223' or tag_num[x].text[2:5] =='244':
+list_movie = [tag_num[x].text[2:5], tag_num[x].find('img')['alt'], tag_comment[x].text[2:5], tag_num[x].find('a')['href'] ]
+else:
+list_movie = [tag_num[x].text[2:5], tag_num[x].find('img')['alt'], tag_comment[x].text[2:5], tag_word[x].text, tag_num[x].find('a')['href']]
+list_all.append(list_movie)
+print(list_all)
+
+
+
+________________________________________________________________________________________________
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
