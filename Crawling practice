@@ -1,0 +1,66 @@
+题目要求：获取文章[《HTTP状态响应码》]全部内容，并且打印出全文内容。
+
+文本URL：
+https://localprod.pandateacher.com/python-manuscript/crawler-html/exercise/HTTP%E5%93%8D%E5%BA%94%E7%8A%B6%E6%80%81%E7%A0%81.md
+ 
+首先调用requests库，使用requests.get('URL')获取文件，返回的是Response对象。
+ 
+然后需要把Response对象用合适的数据形式返回。
+ 
+最后存储数据：
+ 
+存储文件的三个步骤：打开文件，存储文件，关闭文件。
+ 
+【提示】
+文本应使用response.text，把Response对象的内容以字符串的形式返回。
+ 
+
+import requests
+destnation_url = 'https://localprod.pandateacher.com/python-manuscript/crawler—html/exercise/HTTP%E5%93%8D%E5%BA%94%E7%8A%B6%E6%80%81%E7%A0%81.md'
+res = requests.get (destnation_url)
+print(res.status_code) # 查看响应码
+article=res.text # 把Response对象的内容以字符串的形式返回
+print(article) 
+
+
+________________________________________________________________________________________________
+
+
+练习-图片下载
+
+获取下面的图片，并储存图片。
+https://res.pandateacher.com/2019-01-12-15-29-33.png
+完成存储后，重新刷新页面，即可在【文件】内看到图片。
+ 
+【提示】
+1. 获取数据
+    图片URL：https://res.pandateacher.com/2019-01-12-15-29-33.png
+    首先调用requests库，使用requests.get('URL')获取文件，返回的是Response对象。
+    然后需要把Response对象用合适的数据形式返回。
+ 
+2. 存储数据
+    存储文件的三个步骤：打开文件，存储文件，关闭文件。
+    这是一个图片，所以应该使用response.content，把Response对象的内容以二进制数据的形式返回。
+
+
+
+
+import requests
+
+res = requests.get('https://res.pandateacher.com/2019-01-12-15-29-33.png')
+# 发出请求，并把返回的结果放在变量res中
+pic=res.content
+# 把Reponse对象的内容以二进制数据的形式返回
+photo = open('spider.jpg','wb')
+# 新建了一个文件ppt.jpg，这里的文件没加路径，它会被保存在程序运行的当前目录下。
+# 图片内容需要以二进制wb读写。你在学习open()函数时接触过它。
+
+photo.write(pic)
+# 获取pic的二进制内容
+
+photo.close()
+
+
+________________________________________________________________________________________________
+
+
