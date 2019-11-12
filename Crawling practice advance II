@@ -1584,6 +1584,490 @@ ________________________________________________________________________________
 
 
 
+练习-煲剧达人
+题目要求
+项目目标：使用多协程和队列，爬取时光网电视剧TOP100的数据（剧名、导演、主演和简介），并用csv模块将数据存储下来。
+时光网TOP100链接：http://www.mtime.com/top/tv/top100/
+ 
+ 【提示】
+分析思路：
+1.分析数据存在哪里（打开“检查”工具，刷新页面，查看第0个请求，看【response】）
+2.观察网址规律（多翻几页，看看网址会有什么变化）
+3.获取、解析和提取数据（需涉及知识点：queue、gevent、request、BeautifulSoup、find和find_all）
+4.存储数据（csv本身的编码格式是utf-8，可以往open（）里传入参数encoding='utf-8'。这样能避免由编码问题引起的报错。)
+注：在练习的【文件】中，你能找到自己创建的csv文件。将其下载到本地电脑后，请用记事本打开，因为用Excel打开可能会因编码问题出现乱码。
+ 
+【解答】
+
+from gevent import monkey
+monkey.patch_all()
+import gevent,requests,bs4,csv
+from gevent.queue import Queue
+
+
+work = Queue()
+url_1 = 'http://www.mtime.com/top/tv/top100/'
+work.put_nowait(url_1)
+
+
+url_2 = 'http://www.mtime.com/top/tv/top100/index-{page}.html'
+for x in range(1,11):
+    real_url = url_2.format(page=x)
+    work.put_nowait(real_url)
+
+
+def crawler():
+    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36'}
+    while not work.empty():
+        url = work.get_nowait()
+        res = requests.get(url,headers=headers)
+        bs_res = bs4.BeautifulSoup(res.text,'html.parser')
+        datas = bs_res.find_all('div',class_="mov_con")
+        for data in datas:
+            TV_title = data.find('a').text
+            data = data.find_all('p')
+            TV_data =''
+            for i in data:
+                TV_data =TV_data + ''+ i.text
+            writer.writerow([TV_title,TV_data])
+            print([TV_title,TV_data])
+
+
+csv_file = open('timetop.csv','w',newline='',encoding='utf-8')
+writer = csv.writer(csv_file)
+
+
+task_list = []
+for x in range(3):
+    task = gevent.spawn(crawler)
+    task_list.append(task)
+gevent.joinall(task_list)
+
+
+
+
+
+________________________________________________________________________________________________
+
+第13关
+练习-当当图书榜单爬虫-参考
+题目要求
+项目目标：使用Scrapy，爬取当当网2018年图书销售榜单前3页的数据（图书名、作者和书的价格）。当当网2018年图书销售榜单链接：
+http://bang.dangdang.com/books/bestsellers/01.00.00.00.00.00-year-2018-0-1-1
+ 
+【讲解】
+已在系统帮你创建好了Scrapy的项目和spider的文件。
+你可以在items.py文件里定义item；在bestsellers.py文件里编写spider；在settings.py文件里修改设置；在main.py文件里写入运行scrapy的代码，点击运行。
+注：课堂系统里并没有显示Scrapy的项目里的所有文件，只显示了需要修改或编辑的文件。
+ 
+ 
+【解答】
+items.py文件参考代码
+
+
+# -*- coding: utf-8 -*-
+# Define here the models for your scraped items
+#
+# See documentation in:
+# https://doc.scrapy.org/en/latest/topics/items.html
+import scrapy
+
+
+class DangdangItem(scrapy.Item):
+    name = scrapy.Field()
+    author = scrapy.Field()
+    price = scrapy.Field()
+
+
+
+**************************************
+
+bestsellers.py文件里spider参考代码
+
+
+
+
+import scrapy
+import bs4
+from ..items import DangdangItem
+
+
+class DangdangSpider(scrapy.Spider):
+    name = 'dangdang'
+    allowed_domains = ['http://bang.dangdang.com']
+    start_urls = []
+    for x in range(1, 4):
+        url = 'http://bang.dangdang.com/books/bestsellers/01.00.00.00.00.00-year-2018-0-1-' + str(x)
+        start_urls.append(url)
+
+
+    def parse(self, response):
+        soup = bs4.BeautifulSoup(response.text, 'html.parser')
+        elements = soup.find('ul', class_="bang_list clearfix bang_list_mode").find_all('li')
+        for element in elements:
+            item = DangdangItem()
+            item['name'] = element.find('div', class_="name").find('a')['title']
+            item['author'] = element.find('div', class_="publisher_info").text
+            item['price'] = element.find('div', class_="price").find('span', class_="price_n").text
+            yield item
+
+
+**********************************
+
+
+settings.py文件参考代码
+
+
+
+# -*- coding: utf-8 -*-
+# Scrapy settings for dangdang project
+#
+# For simplicity, this file contains only settings considered important or
+# commonly used. You can find more settings consulting the documentation:
+#
+#     https://doc.scrapy.org/en/latest/topics/settings.html
+#     https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
+#     https://doc.scrapy.org/en/latest/topics/spider-middleware.html
+
+BOT_NAME = 'dangdang'
+
+SPIDER_MODULES = ['dangdang.spiders']
+NEWSPIDER_MODULE = 'dangdang.spiders'
+
+
+# Crawl responsibly by identifying yourself (and your website) on the user-agent
+USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36'
+
+# Obey robots.txt rules
+ROBOTSTXT_OBEY = False
+
+# Configure maximum concurrent requests performed by Scrapy (default: 16)
+#CONCURRENT_REQUESTS = 32
+
+# Configure a delay for requests for the same website (default: 0)
+# See https://doc.scrapy.org/en/latest/topics/settings.html#download-delay
+# See also autothrottle settings and docs
+#DOWNLOAD_DELAY = 3
+# The download delay setting will honor only one of:
+#CONCURRENT_REQUESTS_PER_DOMAIN = 16
+#CONCURRENT_REQUESTS_PER_IP = 16
+
+# Disable cookies (enabled by default)
+#COOKIES_ENABLED = False
+
+# Disable Telnet Console (enabled by default)
+#TELNETCONSOLE_ENABLED = False
+
+# Override the default request headers:
+#DEFAULT_REQUEST_HEADERS = {
+#   'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+#   'Accept-Language': 'en',
+#}
+
+# Enable or disable spider middlewares
+# See https://doc.scrapy.org/en/latest/topics/spider-middleware.html
+#SPIDER_MIDDLEWARES = {
+#    'dangdang.middlewares.DangdangSpiderMiddleware': 543,
+#}
+
+# Enable or disable downloader middlewares
+# See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
+#DOWNLOADER_MIDDLEWARES = {
+#    'dangdang.middlewares.DangdangDownloaderMiddleware': 543,
+#}
+
+# Enable or disable extensions
+# See https://doc.scrapy.org/en/latest/topics/extensions.html
+#EXTENSIONS = {
+#    'scrapy.extensions.telnet.TelnetConsole': None,
+#}
+
+# Configure item pipelines
+# See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
+#ITEM_PIPELINES = {
+#    'dangdang.pipelines.DangdangPipeline': 300,
+#}
+
+# Enable and configure the AutoThrottle extension (disabled by default)
+# See https://doc.scrapy.org/en/latest/topics/autothrottle.html
+#AUTOTHROTTLE_ENABLED = True
+# The initial download delay
+#AUTOTHROTTLE_START_DELAY = 5
+# The maximum download delay to be set in case of high latencies
+#AUTOTHROTTLE_MAX_DELAY = 60
+# The average number of requests Scrapy should be sending in parallel to
+# each remote server
+#AUTOTHROTTLE_TARGET_CONCURRENCY = 1.0
+# Enable showing throttling stats for every response received:
+#AUTOTHROTTLE_DEBUG = False
+
+# Enable and configure HTTP caching (disabled by default)
+# See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html#httpcache-middleware-settings
+#HTTPCACHE_ENABLED = True
+#HTTPCACHE_EXPIRATION_SECS = 0
+#HTTPCACHE_DIR = 'httpcache'
+#HTTPCACHE_IGNORE_HTTP_CODES = []
+#HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+
+
+
+
+main.py文件参考代码
+
+from scrapy import cmdline
+cmdline.execute(['scrapy','crawl','dangdang'])
+
+
+
+
+
+________________________________________________________________________________________________
+
+
+
+第14关
+练习-豆瓣图书短评-参考
+题目要求
+项目目标：运用scrapy的知识，爬取豆瓣图书TOP250前2页的书籍（50本）的短评数据（包括书名、评论ID、短评内容），并存储成Excel。
+网址链接：https://book.douban.com/top250
+ 
+【讲解】
+项目目标：运用scrapy的知识，爬取豆瓣图书TOP250前2页的书籍（50本）的短评数据（包括书名、评论ID、短评内容）。
+网址链接：https://book.douban.com/top250
+ 
+ 
+思路讲解
+我们已经知道要爬取豆瓣图书TOP250前2页的书籍（50本）的短评数据（包括书名、评论ID、短评内容）。
+这意味着我们要先爬取豆瓣图书TOP250前2页的书籍（50本）的详情链接，这样才可以通过书籍的详情页面，找到书籍的短评。
+你可以打开网址链接：https://book.douban.com/top250 ,点击任意一本书籍，看看这本书籍的详情页面，再点击短评，观察一下短评页面。书籍的详情链接藏在`<a>`元素href属性里
+书籍的详情页面里可以看到短评，点击短评旁边的（全部），可以跳转到短评页面：
+ 
+ 
+ 分析思路
+我们需要思考如何才能获取到这些短评数据。
+首先，我们知道要获得豆瓣图书TOP250前2页的书籍（50本）的详情链接。
+在第13关的课程里，我们已经分析过豆瓣图书TOP250的网页，知道数据都藏在html里。相信这一步骤应该难不倒你。接着，我们要通过书籍的短评页面的链接，获取到短评数据（书名、评论ID、短评内容）。而要拿到短评页面的链接，需要我们分析短评页面的网址规律，通过规律构造出短评页面的网址。获取短评数据（书名、评论ID、短评内容），则需要分析短评页面的数据存储在哪里，以及分析短评页面的网页结构。这些分析步骤，你应该不会陌生，之前我都带你一一分析过，希望这次你能自己独立完成分析。
+最后，将获得的数据存储成Excel文件，就成功完成了项目。
+ 
+请先分析完这个项目的过程，再开始书写代码。
+scrapy的项目和spider的文件，已经在练习系统里提前为你创建好了。
+你可以在items.py文件里定义item；在comments.py文件里编写spider；在settings.py文件里修改设置；在pipelines.py文件里写入存储成Excel的代码；在main.py文件里写入运行scrapy的代码，点击运行。
+ 
+注：如果你的代码成功运行，在【文件】里的root文件夹下的douban文件夹里，你就可以找到你创建的存储数据的Excel文件，将其下载到本地，你就能用Excel打开查看。
+
+
+
+
+
+【解答】
+items.py文件参考代码
+
+
+#你可以在items.py文件里定义item；在comments.py文件里编写spider；在settings.py文件里修改设置；在pipelines.py文件里写入存储成Excel的代码；在main.py文件里写入运行scrapy的代码，点击运行。
+
+
+#items.py文件
+# -*- coding: utf-8 -*-
+# Define here the models for your scraped items
+# See documentation in:
+# https://doc.scrapy.org/en/latest/topics/items.html
+
+
+import scrapy
+
+class DoubantopItem(scrapy.Item):
+    book_name = scrapy.Field()
+    ID_name = scrapy.Field()
+    comment = scrapy.Field()
+
+
+
+
+
+comments.py文件里面的spider参考代码  
+
+
+#comments.py文件里编写spider
+import scrapy,bs4
+from ..items import DoubantopItem
+
+
+class DoubantopSpider(scrapy.Spider):
+    name = 'doubantop'
+    allowed_domins = ['https://book.douban.com']
+    start_urls = []
+    for x in range(2):
+        url = 'https://book.douban.com/top250?start=' + str(x * 25)
+        start_urls.append(url)
+
+
+    def parse(self, response):
+        soup = bs4.BeautifulSoup(response.text,'html.parser')
+        datas = soup.find_all('tr',class_='item')
+        for data in datas:
+            book_url = data.find_all('a')[1]['href']
+            comment_url = book_url+'comments/'
+            yield scrapy.Request(comment_url,callback=self.parse_comment)
+
+
+    def parse_comment(self,response):
+        soup = bs4.BeautifulSoup(response.text,'html.parser')
+        book_name = soup.find('div',id='content').text.split()[0]
+        datas = soup.find_all('div',class_='comment')
+        for data in datas:
+            item = DoubantopItem()
+            item['book_name'] = book_name
+            item['ID_name'] = data.find_all('a')[1].text
+            item['comment'] = data.find('span',class_='short').text
+            yield item
+
+
+
+
+
+settings.py文件参考代码          
+
+
+#settings.py文件里修改设置
+# -*- coding: utf-8 -*-
+
+
+# Scrapy settings for doubantop project
+#
+# For simplicity, this file contains only settings considered important or
+# commonly used. You can find more settings consulting the documentation:
+#
+#     https://doc.scrapy.org/en/latest/topics/settings.html
+#     https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
+#     https://doc.scrapy.org/en/latest/topics/spider-middleware.html
+
+
+BOT_NAME = 'doubantop'
+
+SPIDER_MODULES = ['doubantop.spiders']
+NEWSPIDER_MODULE = 'doubantop.spiders'
+
+
+# Crawl responsibly by identifying yourself (and your website) on the user-agent
+USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36'
+
+# Obey robots.txt rules
+ROBOTSTXT_OBEY = False
+
+# Configure maximum concurrent requests performed by Scrapy (default: 16)
+#CONCURRENT_REQUESTS = 32
+
+# Configure a delay for requests for the same website (default: 0)
+# See https://doc.scrapy.org/en/latest/topics/settings.html#download-delay
+# See also autothrottle settings and docs
+#DOWNLOAD_DELAY = 3
+# The download delay setting will honor only one of:
+#CONCURRENT_REQUESTS_PER_DOMAIN = 16
+#CONCURRENT_REQUESTS_PER_IP = 16
+
+# Disable cookies (enabled by default)
+#COOKIES_ENABLED = False
+
+# Disable Telnet Console (enabled by default)
+#TELNETCONSOLE_ENABLED = False
+
+# Override the default request headers:
+#DEFAULT_REQUEST_HEADERS = {
+#   'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+#   'Accept-Language': 'en',
+#}
+
+# Enable or disable spider middlewares
+# See https://doc.scrapy.org/en/latest/topics/spider-middleware.html
+#SPIDER_MIDDLEWARES = {
+#    'doubantop.middlewares.DoubantopSpiderMiddleware': 543,
+#}
+
+# Enable or disable downloader middlewares
+# See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
+#DOWNLOADER_MIDDLEWARES = {
+#    'doubantop.middlewares.DoubantopDownloaderMiddleware': 543,
+#}
+
+# Enable or disable extensions
+# See https://doc.scrapy.org/en/latest/topics/extensions.html
+#EXTENSIONS = {
+#    'scrapy.extensions.telnet.TelnetConsole': None,
+#}
+
+# Configure item pipelines
+# See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
+ITEM_PIPELINES = {
+    'doubantop.pipelines.DoubantopPipeline': 300,
+}
+
+# Enable and configure the AutoThrottle extension (disabled by default)
+# See https://doc.scrapy.org/en/latest/topics/autothrottle.html
+#AUTOTHROTTLE_ENABLED = True
+# The initial download delay
+#AUTOTHROTTLE_START_DELAY = 5
+# The maximum download delay to be set in case of high latencies
+#AUTOTHROTTLE_MAX_DELAY = 60
+# The average number of requests Scrapy should be sending in parallel to
+# each remote server
+#AUTOTHROTTLE_TARGET_CONCURRENCY = 1.0
+# Enable showing throttling stats for every response received:
+#AUTOTHROTTLE_DEBUG = False
+
+# Enable and configure HTTP caching (disabled by default)
+# See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html#httpcache-middleware-settings
+#HTTPCACHE_ENABLED = True
+#HTTPCACHE_EXPIRATION_SECS = 0
+#HTTPCACHE_DIR = 'httpcache'
+#HTTPCACHE_IGNORE_HTTP_CODES = []
+#HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+
+
+
+
+pipelines.py文件参考代码
+
+
+
+#pipelines.py文件里写入存储成Excel的代码
+# -*- coding: utf-8 -*-
+# Define your item pipelines here
+#
+# Don't forget to add your pipeline to the ITEM_PIPELINES setting
+# See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
+
+
+import openpyxl
+
+class DoubantopPipeline(object):
+    def __init__(self):
+        self.wb = openpyxl.Workbook()
+        self.ws = self.wb.active
+        self.ws.append(['书名','ID名', '短评'])
+
+
+    def process_item(self, item, spider):
+        line = [item['book_name'],item['ID_name'], item['comment']]
+        self.ws.append(line)
+        return item
+
+
+    def close_spider(self, spider):
+        self.wb.save('book.xlsx')
+        self.wb.close()
+
+
+
+main.py文件参考代码
+
+
+#main.py文件里写入运行scrapy的代码，点击运行。
+from scrapy import cmdline
+cmdline.execute(['scrapy','crawl','doubantop'])
+
+
+________________________________________________________________________________________________
+
 
 
 
