@@ -1,0 +1,2688 @@
+【基础语法】
+
+
+print('''
+    へ　　　　　／|
+　　/＼7　　　 ∠＿/
+　 /　│　　 ／　／
+　│　Z ＿,＜　／　　 /`ヽ
+　│　　　　　ヽ　　 /　　〉
+　 Y　　　　　`　 /　　/
+　ｲ●　､　●　　⊂⊃〈　　/
+　()　 へ　　　　|　＼〈
+　　>ｰ ､_　 ィ　 │ ／／
+　 / へ　　 /　ﾉ＜| ＼＼
+　 ヽ_ﾉ　　(_／　 │／／
+　　7　　　　　　　|／
+　　＞―r￣￣`ｰ―＿
+''')
+
+
+
+
+________________________________________________________________________________________________ 
+
+A = input('输入一个你错过的人：')     
+B = input('输入你最想对ta说的话：')   
+C = input('输入一个时长(比如三分钟)：')
+
+print('曾经有一份真挚的爱情放在我面前，ta的名字是' + A)
+print('可我没有珍惜，如果上天能再给我一次机会，我会对他说三个字'+ B)
+print('如果非要给这句话加上一个期限，我希望是'+ C)
+
+
+
+________________________________________________________________________________________________
+
+
+
+number1  = 1
+number2 = 2
+unit1 = '人'
+unit2 = '眼'
+line1 = '我编程累'
+line2 = '是bug相随'
+sentence1 = '碎掉的节操满地堆'
+sentence2 = '我只求今日能早归'
+
+print(str(number1) + unit1 + line1 + sentence1)
+print(str(number2) + unit2 + line2 + sentence2)
+
+
+
+________________________________________________________________________________________________
+
+
+
+
+slogan = '脸黑怪我咯'
+number = '7.8'
+unit = '张'
+sentence = '蓝票一个SSR都没有'
+word = slogan + str(int(float(number))) + sentence
+print(word)
+
+
+
+________________________________________________________________________________________________
+
+
+print('《红豆》王维\n红豆生南国, 春来发几枝。\n愿君多采撷, 此物最相思。')
+
+
+________________________________________________________________________________________________
+
+
+a = input('请输入你每天花在手机上的娱乐时间：')
+b = int(a) * 7
+print('您一周花在手机上的娱乐时间总共是'+str(b)+'小时')
+
+
+
+________________________________________________________________________________________________
+
+
+#以下为答案示例(salary为多少都是对的)
+salary = 200
+if salary <= 500:
+    #条件：如果工资小于等于500
+    print('欢迎进入史塔克穷人帮前三名')
+    if salary <= 100:
+        print('恭喜您荣获“美元队长”称号！')
+    else:
+        print('请找弗瑞队长加薪')
+elif 500 < salary <= 1000:
+    print('祝贺您至少可以温饱了。')
+elif salary > 1000:
+    print('经济危机都难不倒您！')
+    if 1000 < salary <= 20000:
+        print('您快比钢铁侠有钱了！')
+    else:
+        print('您是不是来自于瓦坎达国？')
+print('程序结束')
+
+
+
+
+
+________________________________________________________________________________________________
+
+
+t = int(input('派大星今天吃了多少个蟹黄堡'))
+if t > 40:
+    print('派大星给海绵宝宝100块')
+else:
+    print('海绵宝宝给派大星100块')
+
+________________________________________________________________________________________________
+
+
+now = input('你们之前的感情有进入暧昧期了吗？回答有/没有：')
+
+if now =='没有':
+    print('进度条还不太够，再等等吧。')
+else:
+    p1 = input('你希望你们的关系再往前一步吗？回答想/不想：')
+    if p1=='不想':
+        print('那还是做朋友吧。')
+    else:
+        p2 = input('那个人呢，ta想吗？回答想/不想：')
+        if p2=='不想':
+            print('恭喜你！获得好人卡*1')
+        else:
+            print('恭喜你们！在一起！')
+
+
+
+now = input('你们之前的感情有进入暧昧期了吗？回答有/没有：')
+p1 = input('你希望你们的关系再往前一步吗？回答想/不想：')
+p2 = input('那个人呢，ta想吗？回答想/不想：')
+
+if now =='没有':
+    print('进度条还不太够，再等等吧。')
+elif p1=='不想':
+    print('那还是做朋友吧。')
+elif p2=='不想':
+    print('恭喜你！获得好人卡*1')
+else:
+    print('恭喜你们！在一起！')
+
+
+
+
+#提示是为了让大家更好写出代码，其实更优雅和符合逻辑的代码是这样的：
+
+if input('你们之前的感情有进入暧昧期了吗？回答有/没有：') =='没有':
+    print('进度条还不太够，再等等吧。')
+elif input('你希望你们的关系再往前一步吗？回答想/不想：')=='不想':
+    print('那还是做朋友吧。')
+elif input('那个人呢，ta想吗？回答想/不想：')=='不想':
+    print('恭喜你！获得好人卡*1')
+else:
+    print('恭喜你们！在一起！')
+
+
+
+
+#我们是可以在写出代码后再进行优化的。
+
+now = input('你们之前的感情有进入暧昧期了吗？回答有/没有：')
+if now =='没有':
+    exit('进度条还不太够，再等等吧。')
+p1 = input('你希望你们的关系再往前一步吗？回答想/不想：')
+if p1=='不想':
+    exit('那还是做朋友吧。')
+p2 = input('那个人呢，ta想吗？回答想/不想：')
+if p2=='不想':
+    exit('恭喜你！获得好人卡*1')
+else:
+    print('恭喜你们！在一起！')
+#第三种答案
+
+
+
+
+now = input('你们之前的感情有进入暧昧期了吗？回答有/没有：')
+
+if now =='没有':
+    print('进度条还不太够，再等等吧。')
+else:
+    p1 = input('你希望你们的关系再往前一步吗？回答想/不想：')
+    if p1=='不想':
+        print('那还是做朋友吧。')
+    else:
+        p2 = input('那个人呢，ta想吗？回答想/不想：')
+        if p2=='不想':
+            print('恭喜你！获得好人卡*1')
+        else:
+            print('恭喜你们！在一起！')
+#第四种答案
+
+
+
+
+________________________________________________________________________________________________
+
+
+
+a = float(input('请输入你的体重(kg)：'))
+b = float(input('请输入你的身高(m)：'))
+bmi = a/(b*b)
+if bmi >= 28.0:
+    print('肥胖')
+elif bmi >= 24.0:
+    print('过重')
+elif bmi >= 18.5:
+    print('正常')
+else:
+    print('过轻')
+
+
+________________________________________________________________________________________________
+
+
+name = input('为哈利·波特的猫头鹰起个名字：')
+print('哈利·波特的猫头鹰叫做' + name)
+
+________________________________________________________________________________________________
+
+
+number = int(input('请输入罗恩吃的巧克力数量：'))
+#int将其转换为整数，之后好进行大小的比较
+if number > 10:
+    print('罗恩要给哈利100块')
+else:
+    print('哈利就给罗恩100块')
+
+
+________________________________________________________________________________________________
+
+
+
+chioce = input('您好，欢迎古灵阁，请问需要帮助吗？需要or不需要？')
+if chioce == '需要':
+    number = input('请问您需要什么帮助呢？1 存取款；2 货币兑换；3 咨询')
+    if number == '2':
+        print('金加隆和人民币的兑换率为1:51.3，即一金加隆=51.3人民币')
+        print('请问您需要兑换多少金加隆呢？')
+        money = input('请输入你需要兑换的金加隆')
+        print('好的，我知道了，您需要兑换' + money + '金加隆。')
+        print('那么，您需要付给我'+str(int(float(money)*51.3))+'人民币。')
+    elif number == '1':
+        print('请到存取款窗口办理')
+    elif number == '3':
+        print('请到咨询窗口咨询')
+    else:
+        print('输入错误，没有你需要的服务')
+
+elif chioce == '不需要':
+    print('好的，再见')
+
+else:
+    print('输入错误')
+
+
+
+________________________________________________________________________________________________
+
+
+
+
+题目讲解
+第一步：取出字典中键为3对应的值（dict1[3]），即['love','hatred','envy']
+第二步：再取出列表['love','hatred','envy']中的第一个元素（dict1[3][0]）
+
+
+
+dict1 = {1:['cake','scone','puff'],2:['London','Bristol','Bath'],3:['love','hatred','envy']}
+print(dict1[3][0])
+
+________________________________________________________________________________________________
+
+
+第一步：元组和列表都是序列,提取的方式也是偏移量，如 tuple1[1]、tuple1[1:]。
+第二步：先取出列表中的第二个元素中的（list2[1]）
+第三步：然后在第二个元素的基础上在去取值，即list2[1][1]
+注：（元组和列表的取值方式是相同的）
+
+
+
+tuple1 = ('A','B')
+list2 = [('A','B'),('C','D'),('E','F')]
+
+print(tuple1[0])
+print(list2[1][1])
+
+
+
+________________________________________________________________________________________________
+
+
+
+练习目标：
+在层层嵌套的各种数据类型中，准确地提取出你需要的数据。<br>
+练习要求：
+在未来世界里，一个新建的童话镇吸引了不少人入住。
+不过，在人群里隐藏着一只狼，会威胁大家的安全。
+童话镇的镇长希望你能找到它，并揭发其身份。
+用程序语言就是说：列表中有个字符串是“狼”，将其打印出来吧。
+
+
+
+townee = [
+    {'海底王国':['小美人鱼''海之王''小美人鱼的祖母''五位姐姐'],'上层世界':['王子','邻国公主']},
+    '丑小鸭','坚定的锡兵','睡美人','青蛙王子',
+    [{'主角':'小红帽','配角1':'外婆','配角2':'猎人'},{'反面角色':'狼'}]
+    ]
+
+print(townee[5][1]['反面角色'])
+
+
+________________________________________________________________________________________________
+
+
+
+
+# while 循环
+n = 0
+while n < 7:
+    n = n+1
+    if n != 4:  # 当num != 4，执行打印语句；等于4时不打印。
+        print(n)
+
+
+
+# for 循环
+for num in range(1,8):  # 为同时能运行两个循环，新取参数 num。
+    if num != 4:  # 当num != 4，执行打印语句；等于4时不打印。
+        print(num)
+
+
+
+________________________________________________________________________________________________
+
+
+小明、小红、小刚是同班同学，且坐在同一排，分别坐在第一位、第二位、第三位。
+由于他们的身高都差不多，所以，老师计划让他们三个轮流坐在第一位。
+每次换座位的时候，第一位变第三位，后面两位都往前一位。
+方法1：append()函数
+ 
+students = ['小明','小红','小刚']
+for i in range(3):
+    student1 = students[0]
+    students = students[1:]
+    students.append(student1)
+    print(students)
+
+
+
+
+
+________________________________________________________________________________________________
+
+
+
+pop()函数
+我们先介绍一下列表中的pop()函数，用于移除列表中的一个元素（默认最后一个元素），并且返回该元素的值。
+可以将其理解为提取和删除的融合：①提取：取到元素，对列表没有影响；②删除：删除列表的元素。
+而移除，则是同时做到取到元素，并且删除列表中的元素。
+
+
+students = ['小明','小红','小刚']
+for i in range(3):
+    student1 = students.pop(0)
+    students.append(student1)
+    print(students)
+
+
+
+________________________________________________________________________________________________
+
+
+1.开启循环，两人分别选择
+首先，我们需要知道两个囚徒各自的选择（input*2）。
+ 
+2.循环当中，有判断和跳出
+两个囚徒的选择，会有四种不同的结果。所以，可以用'if...elif...else'。
+判决提示：
+若两人都认罪，则两人各判10年；
+若一个认罪一个抵赖，则认罪的人判1年，抵赖的人判20年；
+若两人都抵赖，则各判3年——这种情况下跳出循环。
+
+
+
+
+while True:
+    a = input('A，你认罪吗？请回答认罪或者不认')
+    b = input('B，你认罪吗？请回答认罪或者不认')
+
+
+
+
+while True: 
+    a = input('A，你认罪吗？请回答认罪或者不认')
+    b = input('B，你认罪吗？请回答认罪或者不认')
+    if a == '认罪' and b == '认罪':
+        print('两人都得判10年，唉')
+    elif a == '不认' and b == '认罪':
+        print('A判20年，B判1年，唉')
+    elif a == '认罪' and b == '不认':
+        print('A判1年，B判20年')
+    else:
+        print('都判3年，太棒了')
+        break  # 当满足开头提到的条件时，跳出循环。
+
+
+
+________________________________________________________________________________________________
+
+
+
+上一个练习，我们将“囚徒困境”写成了代码，让程序收集两名囚犯的认罪情况，进而决定他们的判决：
+两人都认罪，则各判10年；一个认罪一个抵赖，则前者判1年，后者判20年；两人都抵赖，各判3年。只有两人都不认罪，程序才会停止。
+现在有一个社会学家，在不同的人群中做这个实验，一旦遇到都不认罪的情况，就停止该人群中的实验。
+同时，他希望程序能记录每一对实验者的选择，以及记录第几对实验者都选择不认罪。请你帮帮他吧。
+
+
+几个提示：
+为了记录每一对实验者的选择，需要用一个可拓展的“容器”来存放这些数据；
+为了记录是第几对实验者做了最优选择，需要用一个变量来计数；
+为了将每一对实验者的选择再打印出来，需要写一个循环。
+在打印的那个循环里，需要留意列表是从0开始计数的。
+
+
+
+n = 0
+list_answer = []
+
+
+while True:
+    n += 1
+    a = input('A，你认罪吗？请回答认罪或者不认：')
+    b = input('B，你认罪吗？请回答认罪或者不认：')
+    list_answer.append([a,b])
+    if a == '认罪' and b == '认罪':
+        print('两人都得判10年，唉')
+    elif a == '不认' and b == '认罪':
+        print('A判20年，B判1年，唉')
+    elif a == '认罪' and b == '不认':
+        print('A判1年，B判20年')
+    else:
+        print('都判3年，太棒了')
+        break
+
+print('第' + str(n) + '对实验者选了最优解。')
+
+for i in range(n):
+    print('第' + str(i+1) + '对实验者的选择是：' + str(list_answer[i]))
+
+
+
+
+
+
+________________________________________________________________________________________________
+
+
+下面，会将电影的影片名和主演放在字典里，如`movie = {'妖猫传':['黄轩','染谷将太']}`。
+需要你补充一些代码，让其他人只要输入演员名，就打印出：××出演了电影××。
+ 
+对该练习完整的提示：
+1.先用for...in...遍历字典，把键（即电影名）取出来；
+2.再用字典的键把字典里的值（即包含主演名字的列表）取出来；
+3.最后用if A in B 作为条件判断A在不在B中，即输入的演员名在不在这个列表中。如果在这个列表中，就打印出××出演了电影××。
+
+
+
+
+movies = {
+'妖猫传':['黄轩','染谷将太'],
+'无问西东':['章子怡','王力宏','祖峰'],
+'超时空同居':['雷佳音','佟丽娅'],
+}
+
+
+actor = input('你想查询哪个演员？')
+for  movie in movies:
+    actors = movies[movie]
+    if actor in actors:
+        print(actor + '出演了电影' + movie)
+
+
+
+________________________________________________________________________________________________
+
+
+
+要达成目标，有两种方案：
+1.while True+break：
+开启一个无限循环，设定跳出条件。
+当得到肯定回复时，继续运行；当得到否定回复时，运行break，停止循环，退出游戏。
+ 
+2.while 变量名+变量名的布尔值判断：
+在开头设某变量的布尔值为True，input后开启判断变量的布尔值是否改变。
+当得到肯定回复时，while True，继续运行；当得到否定回复时，while False，停止循环，退出游戏。下面，我们先用较简单的代码来体会一下这两种方案。
+ 
+方案1：while True+break
+开启一个无限循环，设定跳出条件。
+当得到肯定回复时，继续运行；当得到否定回复时，运行break，停止循环，退出游戏。
+ 
+方案2：while 变量名+变量名的布尔值判断
+在开头设某变量的布尔值为True，input后开启判断变量的布尔值是否改变。
+当得到肯定回复时，while True，继续运行；当得到否定回复时，while False，停止循环，退出游戏。
+
+~~~~~~~~~~~~~~~~~~~~~~
+
+# 方案1
+while True:
+    a1 = input('要继续游戏吗，请输入n退出，输入其他继续：')
+    if a1 == 'n':
+        break
+
+
+# 方案2
+again = True
+while again:
+    a2 = input('要继续游戏吗，请输入y继续，输入其他退出：')
+    if a2 == 'y':
+        again = True
+    else:
+        again = False
+
+
+~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+#for循环
+import time
+import random
+
+
+
+for i in range(1,4):
+    player_victory = 0
+    enemy_victory = 0
+    time.sleep(1.5)
+    print('  \n——————现在是第 %s 局——————' % i)
+    player_life = random.randint(100,150)
+    player_attack = random.randint(30,50)
+    enemy_life = random.randint(100,150)
+    enemy_attack = random.randint(30,50)
+
+    print('【玩家】\n血量：%s\n攻击：%s' % (player_life,player_attack))
+    print('------------------------')
+    time.sleep(1)
+    print('【敌人】\n血量：%s\n攻击：%s' % (enemy_life,enemy_attack))
+    print('-----------------------')
+    time.sleep(1)
+
+    while player_life > 0 and enemy_life > 0:
+        player_life = player_life - enemy_attack 
+        enemy_life = enemy_life - player_attack
+        print('你发起了攻击，【玩家】剩余血量%s' % player_life)
+        print('敌人向你发起了攻击，【敌人】的血量剩余%s' % enemy_life)
+        print('-----------------------')
+        time.sleep(1.2)
+
+    if player_life > 0 and enemy_life <= 0:
+        player_victory += 1
+        print('敌人死翘翘了，你赢了！')
+    elif player_life <= 0 and enemy_life > 0:
+        enemy_victory += 1
+        print('悲催，敌人把你干掉了！')
+    else:
+        print('哎呀，你和敌人同归于尽了！')
+
+if player_victory > enemy_victory :
+    time.sleep(1)
+    print('\n【最终结果：你赢了！】')
+elif enemy_victory > player_victory:
+    print('\n【最终结果：你输了！】')
+else: 
+    print('\n【最终结果：平局！】')
+ 
+
+#while 循环  
+import time
+import random
+
+
+
+
+while True:
+    player_victory = 0
+    enemy_victory = 0
+    for i in range(1,4):
+        time.sleep(1.5)
+        print('  \n——————现在是第 %s 局——————' % i)
+        player_life = random.randint(100,150)
+        player_attack = random.randint(30,50)
+        enemy_life = random.randint(100,150)
+        enemy_attack = random.randint(30,50)
+
+        print('【玩家】\n血量：%s\n攻击：%s' % (player_life,player_attack))
+        print('------------------------')
+        time.sleep(1)
+        print('【敌人】\n血量：%s\n攻击：%s' % (enemy_life,enemy_attack))
+        print('-----------------------')
+        time.sleep(1)
+
+        while player_life > 0 and enemy_life > 0:
+            player_life = player_life - enemy_attack 
+            enemy_life = enemy_life - player_attack
+            print('你发起了攻击，【玩家】剩余血量%s' % player_life)
+            print('敌人向你发起了攻击，【敌人】的血量剩余%s' % enemy_life)
+            print('-----------------------')
+            time.sleep(1.2)
+
+        if player_life > 0 and enemy_life <= 0:
+            player_victory += 1
+            print('敌人死翘翘了，你赢了！')
+        elif player_life <= 0 and enemy_life > 0:
+            enemy_victory += 1
+            print('悲催，敌人把你干掉了！')
+        else:
+            print('哎呀，你和敌人同归于尽了！')
+
+    if player_victory > enemy_victory :
+        time.sleep(1)
+        print('\n【最终结果：你赢了！】')
+    elif enemy_victory > player_victory:
+        print('\n【最终结果：你输了！】')
+    else: 
+        print('\n【最终结果：平局！】')
+
+    a1 = input('要继续游戏吗，请输入n退出，输入其他继续：')
+    if a1 == 'n':
+        break
+
+
+
+
+
+
+________________________________________________________________________________________________
+
+
+在这个练习，我们会学会一种新的“格式化字符串”的方法：format()函数。
+ 
+学习format()函数
+format()函数是从 Python2.6 起新增的一种格式化字符串的函数，功能比课堂上提到的方式更强大。
+format()函数用来占位的是大括号{}，不用区分类型码（%+类型码）。
+具体的语法是：'str.format()'，而不是课堂上提到的'str % ()'。
+而且，它对后面数据的引用更灵活，不限次数，也可指定对应关系。
+看完左侧的代码、结果和注释，你就懂上面几句话的意思了。
+ 
+运用format()函数
+将代码中字符串格式化的代码改成format()函数的方法，改完后运行一下，检验是否正确。
+ 
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+import time
+import random
+
+
+player_victory = 0
+enemy_victory = 0
+
+
+while True:
+    for i in range(1,4):
+        time.sleep(1.5)
+        print('  \n——————现在是第 {} 局——————'.format(i))
+        player_life = random.randint(100,150)
+        player_attack = random.randint(30,50)
+        enemy_life = random.randint(100,150)
+        enemy_attack = random.randint(30,50)
+
+
+        print('【玩家】\n血量：{}\n攻击：{}'.format(player_life,player_attack))
+        print('------------------------')
+        time.sleep(1)
+        print('【敌人】\n血量：{}\n攻击：{}'.format(enemy_life,enemy_attack))
+        print('-----------------------')
+        time.sleep(1)
+
+
+        while player_life > 0 and enemy_life > 0:
+            player_life = player_life - enemy_attack 
+            enemy_life = enemy_life - player_attack
+            print('敌人发起了攻击，【玩家】剩余血量{}'.format(player_life))
+            print('你发起了攻击，【敌人】的血量剩余{}'.format(enemy_life))
+            print('-----------------------')
+            time.sleep(1.2)
+
+
+        if player_life > 0 and enemy_life <= 0:
+            player_victory += 1
+            print('敌人死翘翘了，你赢了！')
+        elif player_life <= 0 and enemy_life > 0:
+            enemy_victory += 1
+            print('悲催，敌人把你干掉了！')
+        else:
+            print('哎呀，你和敌人同归于尽了！')
+
+
+    if player_victory > enemy_victory :
+        time.sleep(1)
+        print('\n【最终结果：你赢了！】')
+    elif enemy_victory > player_victory:
+        print('\n【最终结果：你输了！】')
+    else: 
+        print('\n【最终结果：平局！】')
+
+
+    a1 = input('要继续游戏吗，请输入n退出，输入其他继续：')
+    if a1 == 'n':
+        break
+
+
+
+
+________________________________________________________________________________________________
+
+
+1. 合并列表-1
+分析问题，明确结果
+我们的问题是：将两个列表合并起来，并按照从低到高的顺序排序，要得到问题的结果，我们还需要借助打印函数看看我们合并的是否正确。
+ 
+思考要用到的知识&思考切入点
+增加列表的内容与合并列表的含义相同，所以我们可以使用append作为解题的切入点，请你试试！
+提示：假设要用已学过的知识来完成这道作业，需要用到列表的新增函数和循环。
+ 
+
+list1 =  [91, 95, 97, 99]  
+list2 =  [92, 93, 96, 98]
+for i in list2:
+    list1.append(i)
+print(list1)
+
+
+
+
+2.合并列表-2
+上网搜索新知识&找到新的切入点
+好了。你已经完成了第一个需求：合并列表。不过，有没有发现，这个代码还是比较冗余的。有没有更简单的方法呢？请你自己上网搜索一下
+ `python 合并两个列表`，看看是否有更简单的方法（提示：以字母e开头），学会后再回来继续做作业吧。
+请你根据新学到的知识，简化代码。
+注（如果你直接将 list2 合并到 list1 上，那就无法做到只看A组的成绩，所以，最好再建一个列表来合并两组的成绩）
+
+
+list1 =  [91, 95, 97, 99]  
+list2 =  [92, 93, 96, 98]
+# 把 A 组成绩赋值给一个新列表，用来存合并的成绩——这个细节要注意！
+list3 =list1
+list3.extend(list2)
+print(list3)
+
+
+
+
+3.列表排序
+主动搜索，掌握新知
+老师鼓励你自己去探寻解决问题的方法，上网搜索一下列表的排序方法吧，是不是发现了一个以字母s开头的方法？
+
+
+list3= [91, 95, 97, 99, 92, 93, 96, 98]
+list3.sort()
+print(list3)
+
+
+________________________________________________________________________________________________
+
+
+ 练习要求
+上一个练习中，我们完成了两组成绩的合并和排序。
+不过，老师有了新的需求：想知道两组的平均分，以及把低于平均分的成绩也打印出来。
+所以，在这个练习中，我们会帮老师计算出两组的平均分，并挑出那些在平均分之下的成绩。
+
+
+解题三连击：
+1.目前我们想要的结果是：求平均值和判断比较；
+2.我们可以用到的知识有：循环叠加成绩，然后除以总人数，即可求平均值。判断比较用小于号和空列表即可；
+3.我们的切入点：由于学生的成绩已经被我们集中到一个列表里，所以可以用for循环遍历这个列表来取出小于平均值的成绩。
+经过三连击，相信你已经可以帮老师自动化地达成目标了。
+ 
+
+scores1 =  [91, 95, 97, 99, 92, 93, 96, 98]  
+sum = 0
+scores2 = []
+
+for score in scores1:
+    sum = sum + score
+    average = sum/len(scores1)  
+print('平均成绩是：{}'.format(average))
+
+
+for score in scores1:
+    if score < average:
+        scores2.append(score)
+        continue
+print(' 低于平均成绩的有：{}'.format(scores2))
+
+
+
+
+第二种 解题三连击：
+1.目前我们想要的结果是：求平均值和判断比较；
+2.我们可以去找的新知识有：Python 求平均值；
+3.我们的切入点：请你通过搜索，找到更简单的求平均值的方法，来改造代码。
+ 
+【提示】
+这个方法的单词首字母是“n”，性质是“拓展程序库”。在改造代码前，可以先读懂网上的案例。
+
+
+
+import numpy as np
+
+
+scores1 =  [91, 95, 97, 99, 92, 93, 96, 98]  
+scores2 = []
+
+
+average = np.mean(scores1)  # 一行解决。
+print('平均成绩是：{}'.format(average))
+
+
+for score in scores1:
+    if score < average:
+        scores2.append(score)
+        continue
+print(' 低于平均成绩的有：{}'.format(scores2))
+
+
+
+________________________________________________________________________________________________
+
+
+我们已经有一个hellokitty抽奖器，现在，请你把这个程序封装成一个新的函数。
+
+
+
+import random
+import time
+
+# 用random函数在列表中随机抽奖，列表中只有3位候选者。
+luckylist = ['海绵宝宝','派大星','章鱼哥']
+# random模块中有个随机选取一个元素的方法：random.choice()。
+a = random.choice(luckylist)  # 从3个人中随机选取1个人。
+print('开奖倒计时',3)
+time.sleep(1)  # 调用time模块，控制打印内容出现的时间
+print('开奖倒计时',2)
+time.sleep(1)
+print('开奖倒计时',1)
+time.sleep(1)
+# 使用三引号打印hellokitty的头像
+image = '''
+ /\_)o<
+|      \\
+| O . O|
+ \_____/
+'''
+print(image)  # ……
+print('恭喜'+a+'中奖！')  # 使用print函数打印幸运者名单
+import random
+import time
+
+
+运行代码，熟悉了解抽奖器抽奖的原理，请仔细查看注释讲解。
+ 
+分析代码结构，完成函数封装
+
+# 提示：将以下部分封装进函数
+luckylist = ['海绵宝宝','派大星','章鱼哥']
+a = random.choice(luckylist) 
+print('开奖倒计时',3)
+time.sleep(1)
+print('开奖倒计时',2)
+time.sleep(1)
+print('开奖倒计时',1)
+time.sleep(1)
+image = '''
+/\_)o<
+| \\
+| O . O|
+\_____/
+'''
+print(image)
+print('恭喜'+a+'中奖！')
+# 查看注释，运行代码。
+import random
+import time
+
+ 
+抽奖程序分为两部分：
+我们需要将第二部分用函数封装起来，并调用函数。提示：3个参与者即函数有3个参数。
+
+
+import random
+import time
+
+# 将抽奖程序封装成函数
+def choujiang(q,w,e):  # 定义一个抽奖函数，带有3个参数，也就是3位候选人
+    luckylist = [q,w,e]  # 定义一个中奖名单的列表
+    a = random.choice(luckylist)  # 在中奖名单里面随机选择
+    print('开奖倒计时',3)
+    time.sleep(1)
+    print('开奖倒计时',2)
+    time.sleep(1)
+    print('开奖倒计时',1)
+    time.sleep(1)
+    image = '''
+    /\_)o<
+    |      \\
+    | O . O|
+    \_____/
+    '''
+    print(image)
+    print('恭喜'+a+'中奖！')
+choujiang('虚竹','萧峰','段誉')  # 调用函数
+
+
+
+
+
+________________________________________________________________________________________________
+
+练习-生成一副扑克牌
+
+
+练习要求：
+我们将通过这个练习，简单地复习一下return的用法。
+另外，这个练习也要求你能够快速地学习新知识并将其运用出来。
+新知识有3个：一种新的列表生成方式、extend 的新用法和列表生成式。
+ 
+ 三个新知识
+请仔细查看右侧的代码和注释。重要的几行代码：
+
+
+num2 = list(range(1,6))
+
+num2.extend('ABCDE') 
+
+list2 = [m+n for m in ['天字', '地字'] for n in '一二']
+
+list3 = [n*n for n in range(1,11) if n % 3 == 0]
+
+
+
+
+请根据学到的新知识，补全函数cards()。
+每张扑克牌的展现形式是一个元组：(花色，大小)。
+
+
+def cards():
+    color = ['红心', '方块', '梅花','黑桃']
+    num = list(range(2, 11))
+    num.extend('JQKA')
+    return [(x, y) for x in color for y in num ]
+
+
+print(cards())
+
+
+
+________________________________________________________________________________________________
+
+通过这个练习，掌握函数定义和调用的基本用法
+
+练习要求：
+眼看要过年了，深夜食堂经营的不错，你打算给员工发奖金犒劳一下。请你定义函数，当输入员工姓名和工作时长两个参数，即可打印出该员工获得多少年终奖。
+
+
+ 
+
+
+
+________________________________________________________________________________________________
+
+
+
+和电脑玩一个剪刀石头布的游戏：电脑随机出拳，我们可选择出什么。
+
+
+1.双方出拳
+首先，我们要让双方选择出拳，才能判断胜负。
+我们可以设置变量computer_choice代表电脑的出拳选择，设置变量user_choice代表你的出拳选择。
+电脑的出拳，我们可以使用random.choice()来随机选择；我们的出拳，可以手动输入我们出拳的类型。
+另外，判断下输入：当输入的内容不是石头剪刀布时，电脑会提醒'输入有误，请重新出拳'，并重新出拳。
+
+
+
+import random
+# 出拳
+
+punches = ['石头','剪刀','布']
+computer_choice = random.choice(punches)
+user_choice = ''
+user_choice = input('请出拳：（石头、剪刀、布）')  # 请用户输入选择
+while user_choice not in punches:  # 当用户输入错误，提示错误，重新输入
+    print('输入有误，请重新出拳')
+    user_choice = input()
+
+
+2.双方亮拳
+你和电脑已经对自己要出的拳进行了选择，接下来，我们需要知道双方的出拳类型。
+请使用print()函数补充亮拳的结果。
+
+
+import random
+
+# 出拳
+punches = ['石头','剪刀','布']
+computer_choice = random.choice(punches)
+user_choice = ''
+user_choice = input('请出拳：（石头、剪刀、布）')  # 请用户输入选择
+while user_choice not in punches:  # 当用户输入错误，提示错误，重新输入
+    print('输入有误，请重新出拳')
+    user_choice = input()
+
+# 亮拳
+print('————战斗过程————')
+print('电脑出了：%s' %(computer_choice))
+print('你出了：%s' %(user_choice))
+
+
+
+3.判断胜负
+在前面两步，电脑和你已经选择完出拳的类型并亮拳后，只差最后一步：根据结果判断胜负。
+胜负分为三种情况：
+两方出拳一致：平局；
+你出石头，电脑出剪刀；你出剪刀，电脑出布；你出布，电脑出石头：你获胜；
+其他情况：你输了。
+根据上面的逻辑将代码补充完整，判断胜负，试试能否运行。
+
+
+import random
+
+# 出拳
+punches = ['石头','剪刀','布']
+computer_choice = random.choice(punches)
+user_choice = ''
+user_choice = input('请出拳：（石头、剪刀、布）')  # 请用户输入选择
+while user_choice not in punches:  # 当用户输入错误，提示错误，重新输入
+    print('输入有误，请重新出拳')
+    user_choice = input()
+
+# 亮拳
+print('————战斗过程————')
+print('电脑出了：%s' %(computer_choice))
+print('你出了：%s' %(user_choice))
+
+# 胜负
+print('—————结果—————')
+
+
+
+参考答案
+
+
+punches = ['石头','剪刀','布']
+computer_choice = random.choice(punches)
+user_choice = ''
+user_choice = input('请出拳：（石头、剪刀、布）')  # 请用户输入选择
+while user_choice not in punches:  # 当用户输入错误，提示错误，重新输入
+    print('输入有误，请重新出拳')
+    user_choice = input()
+
+# 亮拳
+print('————战斗过程————')
+print('电脑出了：%s' %(computer_choice))
+print('你出了：%s' %(user_choice))
+
+# 胜负
+print('—————结果—————')
+if user_choice == computer_choice:  # 使用if进行条件判断
+    print('平局！')
+elif (user_choice == '石头' and computer_choice == '剪刀') or (user_choice == '剪刀' and computer_choice == '布') or (user_choice == '布' and computer_choice == '石头'):
+    print('你赢了！')
+else:
+    print('你输了！')
+
+
+________________________________________________________________________________________________
+
+
+练习要求
+上一个练习的代码中，有一个判断语句的代码很长很长：
+elif (user_choice == '石头' and computer_choice == '剪刀') or (user_choice == '剪刀' and computer_choice == '布') or (user_choice == '布' and computer_choice == '石头'):
+我们会通过一个新的知识，将其简化，体验到“知识得增加，代码得简化”这个客观规律。
+ 
+【讲解】
+明确目标很重要（所以重复三遍）。
+做到后面的步骤，可再点开左侧的“练习介绍”查看。
+ 
+index()函数
+index() 函数用于找出列表中某个元素第一次出现的索引位置。
+语法为：list.index(obj)，obj为object（对象）的缩写。
+具体可参考右侧的代码和运行结果。
+现在，请你根据新学的函数去简化代码吧。
+
+
+import random
+
+punches = ['石头','剪刀','布']
+computer_choice = random.choice(punches)
+user_choice = ''
+user_choice = input('请出拳：（石头、剪刀、布）')
+while user_choice not in punches:
+    print('输入有误，请重新出拳')
+    user_choice = input()
+
+print('————战斗过程————')
+print('电脑出了：%s' % computer_choice)
+print('你出了：%s' % user_choice)
+
+print('—————结果—————')
+if user_choice == computer_choice:
+    print('平局！')
+elif user_choice == punches[punches.index(computer_choice)-1]:
+    print('你赢了！')
+else:
+    print('你输了！')
+
+
+
+
+
+________________________________________________________________________________________________
+
+
+知识点debug
+
+scores = {'语文':89, '数学':95, '英语':80}
+def get_average(scores):
+    sum_score = 0
+    for subject, score in scores.items():
+        sum_score += score
+        print('现在的总分是%d'%sum_score)
+    ave_score = sum_score/len(scores)
+    print('平均分是%d'%ave_score)
+
+get_average(scores)
+
+
+
+
+
+
+________________________________________________________________________________________________
+
+思维不清debug
+
+
+not_bad_word = True
+while not_bad_word:
+    x = input('请给旺财取个外号：')
+    if x == '小狗' or x =='汪汪':  # 只要外号是两个中的一个，就会生气。
+        not_bad_word = False
+        print('我生气了，不想理你了！')
+
+
+print('对不起，以后我不会这么叫你了')
+
+
+
+________________________________________________________________________________________________
+
+
+
+被动掉坑debug
+
+
+deposit = [100,300,900,2000,5000,0,2000,4500]
+
+for i in range(1, len(deposit)):
+    if deposit[i-1] == 0:  # 判断被除数等于0时，特殊处理。
+        print('你上次存款为 0 哦！')
+    else:
+        times = deposit[i]/deposit[i-1]
+        print('你的存款涨了%f倍'%times)
+
+
+
+
+________________________________________________________________________________________________
+
+
+
+练习-贴心的除法计算器-参考
+ 
+练习目标：
+通过这个练习，我们会用代码做出一个贴心的除法计算器：只要输入有误，就会给出相应的报错信息。
+ 
+练习要求：
+这个除法计算器需要包含的报错信息有：输入了非数值（即不属于整数和浮点数）、被除数为零以及变量不存在。
+为了让代码可以给出相应的报错信息，我们可以运用课堂中谈到的`try...except`语句。
+ 
+【讲解】
+明确目标很重要（所以重复三遍）。
+做到后面的步骤，可再点开左侧的“练习介绍”查看。
+ 
+回顾和升级
+我们以课堂中的一个代码为例，回顾并升级对`try...except`语句的用法。
+请你按照右侧代码区的提醒阅读和运行代码，了解带多个except的try结构。
+ 
+【提示】
+有兴趣的话，可阅读课堂末的链接，了解`try...except`的更多用法和变形。
+请你找到右侧的代码可能会出现的几种报错（可运行尝试），然后用带多个except的try结构来解决这些可能出现的输入错误。
+ 
+第二个报错信息是：ValueError，你找到了吗
+
+
+
+
+
+print('\n欢迎使用除法计算器！\n')
+
+
+while True:
+    try:
+        x = input('请你输入被除数：')
+        y = input('请你输入除数：')
+        z = float(x)/float(y)
+    except ZeroDivisionError:
+        print('0是不能做除数的！')
+    except ValueError:
+        print('除数和被除数都应该是整值或浮点数！')
+    else:
+        print(x,'/',y,'=',z)
+        break
+
+
+________________________________________________________________________________________________
+
+1.新增业绩的类方法
+【参考】
+
+
+# 创建一个人事系统类
+class hrSystem:
+    # 创建存储员工名字的变量 name
+    name = ''
+    # 创建存储员工工资的变量 salary
+    salary = 0
+    # 创建存储员工绩效的变量 kpi 
+    kpi = 0
+
+    # 定义录入员工信息的类方法
+    @classmethod
+    def record(cls, name, salary, kpi):
+        cls.name = name
+        cls.salary = salary
+        cls.kpi = kpi
+
+    # 定义打印员工信息的类方法
+    @classmethod
+    def print_record(cls):
+        print(cls.name + '的工作信息如下：')
+        print('本月工资：' + str(cls.salary))
+        print('本年绩效：' + str(cls.kpi))
+
+    # 定义根据 kpi 评奖的类方法
+    @classmethod
+    def kpi_reward(cls):
+        if cls.kpi > 95:
+            print('恭喜' + cls.name + '拿到明星员工奖杯！')
+        elif cls.kpi <= 95 and cls.kpi >= 80:
+            print('恭喜' + cls.name + '拿到优秀员工奖杯！')
+        else:
+            print('很遗憾' + cls.name + '这次没有评上奖杯，希望来年努力工作，勇创佳绩！')
+
+# 验证结果的代码        
+hrSystem.record('bob', 13000, 98)
+hrSystem.kpi_reward()
+hrSystem.record('candy', 8000, 89)
+hrSystem.kpi_reward()
+hrSystem.record('jony', 8000, 75)
+hrSystem.kpi_reward()
+
+
+
+
+2.新增检测名字的类方法
+
+
+# 创建一个人事系统类
+class hrSystem:
+    # 创建存储员工名字的变量 name
+    name = ''
+    # 创建存储员工工资的变量 salary
+    salary = 0
+    # 创建存储员工绩效的变量 kpi 
+    kpi = 0
+
+    # 定义录入员工信息的类方法
+    @classmethod
+    def record(cls, name, salary, kpi):
+        cls.name = name
+        cls.salary = salary
+        cls.kpi = kpi
+
+    # 定义打印员工信息的类方法
+    @classmethod
+    def print_record(cls):
+        print(cls.name + '的工作信息如下：')
+        print('本月工资：' + str(cls.salary))
+        print('本年绩效：' + str(cls.kpi))
+
+    # 定义根据 kpi 评奖的类方法
+    @classmethod
+    def kpi_reward(cls):
+        if cls.kpi > 95:
+            print('恭喜' + cls.name + '拿到明星员工奖杯！')
+        elif cls.kpi <= 95 and cls.kpi >= 80:
+            print('恭喜' + cls.name + '拿到优秀员工奖杯！')
+        else:
+            print('很遗憾' + cls.name + '这次没有评上奖杯，希望来年努力工作，勇创佳绩！')
+
+    # 检查录入名称是否正确的类方法   
+    @classmethod
+    def check_name(cls):
+        if cls.name not in ['bob', 'candy', 'jony', 'kelly']:
+            print('录入错误！' + cls.name + '不是本公司员工！')
+        else:
+            print('录入正确~')
+
+# 验证结果的代码
+hrSystem.record('bob', 13000, 98)
+hrSystem.check_name()
+hrSystem.record('spy', 3000, 60)
+hrSystem.check_name()
+
+
+
+
+
+3.优化代码
+【参考】
+
+
+
+# 创建一个人事系统类
+class hrSystem:
+    # 创建存储员工名字的变量 name
+    name = ''
+    # 创建存储员工工资的变量 salary
+    salary = 0
+    # 创建存储员工绩效的变量 kpi 
+    kpi = 0
+
+    # 定义录入员工信息的类方法
+    @classmethod
+    def record(cls, name, salary, kpi):
+        cls.name = name
+        cls.salary = salary
+        cls.kpi = kpi
+
+    # 定义打印员工信息的类方法
+    @classmethod
+    def print_record(cls):
+        if cls.check_name():  # 以 cls.check_name() 的返回值（0或1）作为判断条件。
+            print(cls.name + '的工作信息如下：')
+            print('本月工资：' + str(cls.salary))
+            print('本年绩效：' + str(cls.kpi))
+
+    # 定义根据 kpi 评奖的类方法
+    @classmethod
+    def kpi_reward(cls):
+        if cls.kpi > 95:
+            print('恭喜' + cls.name + '拿到明星员工奖杯！')
+        elif cls.kpi <= 95 and cls.kpi >= 80:
+            print('恭喜' + cls.name + '拿到优秀员工奖杯！')
+        else:
+            print('很遗憾' + cls.name + '这次没有评上奖杯，希望来年努力工作，勇创佳绩！')
+        
+    # 检查录入名称是否正确的类方法
+    @classmethod
+    def check_name(cls):
+        if cls.name not in ['bob', 'candy', 'jony', 'kelly']:
+            print('录入错误！' + cls.name + '不是本公司员工！')
+            return 0  # 设置返回值为0
+        else:
+            print('录入正确~')
+            return 1  # 设置返回值为1
+
+# 验证结果的代码
+hrSystem.record('spy', 3000, 60)
+hrSystem.print_record()
+
+
+
+________________________________________________________________________________________________
+
+
+练习要求
+为类calendar添加两个方法：一个删除完成项，一个添加新增项。
+由于日程安排是事情和时间的配对，所以我们用字典来存放：
+`{'给父母买礼物':'9:00', '学习':'10:00', '和朋友聚会':'18:30'}`
+接下来，需要你新建两个类方法，从而实现字典中的数据增减。
+ 
+【讲解】
+ 
+明确目标很重要（所以重复三遍）。
+做到后面的步骤，可再点开左侧的“练习介绍”查看。
+ 
+ 新建两种类方法
+请你补全右侧的代码，让其成功运行，且结果为：
+`{'给父母买礼物':'9:00', '学习':'10:00', '和朋友聚会':'18:30'}`
+ 
+【提示】
+这两个类方法的参数个数分别为2和3（删除只要键，新增要键值对）。
+
+
+
+
+class calendar:
+    date = '2020-08-08'
+    things = {'给父母买礼物':'9:00', '学习':'10:00', '和朋友聚会':'18:30'}
+
+
+    @classmethod
+    def thing_done(cls, thing):
+        del cls.things[thing]
+
+
+    @classmethod
+    def add_thing(cls, thing, time):
+        cls.things[thing] = time
+
+
+calendar.thing_done('给父母买礼物')
+calendar.add_thing('写日记', '20:00')
+print(calendar.things)
+
+
+
+
+
+
+________________________________________________________________________________________________
+
+
+class Chinese:
+
+
+    def __init__(self,hometown,region):
+        self.hometown = hometown
+        self.region = region
+        print('程序持续更新中……')
+
+
+    def born(self):
+        print('我生在%s。'%(self.hometown))
+
+
+    def live(self):
+        print('我在%s。'%(self.region))
+    
+    # 新建方法，调用上面的两个方法（注：方法名可自定义）。
+    def citys(self):
+        self.born()
+        self.live()
+
+
+wufeng = Chinese('广东', '深圳')
+wufeng.citys()
+
+
+
+
+
+________________________________________________________________________________________________
+
+
+class Robot:
+    def __init__(self):
+        self.name = input('我现在刚诞生，还没有名字，帮我起一个吧。')
+        self.master = input('对了，我要怎么称呼你呢？')
+        print('你好%s，我叫%s。很开心，遇见你~'%(self.master,self.name))
+    
+    def say_wish(self):
+        wish = input('告诉一个你的愿望吧：')
+        print(self.master+'的愿望是：')
+        # 这里也可以用字符串的格式化，不过，用循环语句的话，之后改复述次数会方便些。
+        for i in range(3):
+            print(wish)
+
+
+robot1 = Robot()
+robot1.say_wish()
+
+
+
+________________________________________________________________________________________________
+
+
+1.问卷答案的储存
+
+
+# 不用运行，读懂即可。
+class Survey():
+    # 收集调查问卷的答案
+    def __init__(self, question):
+        self.question = question
+        # 定义收集问卷问题答案的列表
+        self.response = []
+   
+    # 显示调查问卷的题目
+    def show_question(self):
+        print(self.question)
+
+    # 存储问卷搜集的答案
+    def store_response(self, new_response):
+        self.response.append(new_response)  
+        # 将答案添加到列表self.response（见第7行
+ 
+
+
+
+
+
+________________________________________________________________________________________________
+
+2.搜集问题-最喜欢的美食
+
+
+
+class Survey():
+    # 收集调查问卷的答案
+    def __init__(self, question):
+        self.question = question
+        self.response = []
+    
+    # 显示调查问卷的题目
+    def show_question(self):
+        print(self.question)
+
+    # 存储问卷搜集的答案
+    def store_response(self, new_response):
+        self.response.append(new_response)
+
+# 请实例化Survey()类，并且显示出这次的调查问卷问题。
+food_survey = Survey('你最喜欢的美食是什么？')  # 类的实例化，同时为参数question赋值。
+food_survey.show_question()  # 调用类方法打印问题
+
+# 存储问卷调查的答案
+while True:
+    response = input('请回答问卷问题，按 q 键退出：')
+    if response == 'q':
+        break
+    food_survey.store_response(response)  # 再次调用类方法，进行问答的收集。
+
+# 输出测试
+for food in food_survey.response:
+    print('美食：' + food)
+
+
+
+
+________________________________________________________________________________________________
+
+
+
+3.实名问卷：搜集名字和籍贯地
+
+
+class Survey():
+    # 收集调查问卷的答案
+    def __init__(self, question):
+        self.question = question
+        self.response = []
+    
+    # 显示调查问卷的题目
+    def show_question(self):
+        print(self.question)
+
+    # 存储问卷搜集的答案
+    def store_response(self, new_response):
+        self.response.append(new_response)
+
+# 请定义实名调查问卷的新类 RealNameSurvey，继承自 Survey 类
+class RealNameSurvey(Survey):
+    def __init__(self, question):
+        Survey.__init__(self, question)
+        self.response = {}  # 由于籍贯地和名字挂钩，所以用构成为“键值对”的字典来存放。
+    
+    # 存储问卷搜集的答案（覆盖父类的类方法）
+    def store_response(self, name, new_response):  # 除了 self，还需要两个参数。
+        self.response[name] = new_response  # 键值对的新增
+
+survey = RealNameSurvey('你的籍贯地是哪？')
+survey.show_question()
+while True:
+    response = input('请回答问卷问题，按 q 键退出：')
+    if response == 'q':
+        break
+    name = input('请输入回答者姓名：')
+    survey.store_response(name, response)  # 调用类方法，将两次通过 input 的字符串存入字典。
+
+# 输出测试
+for name, value in survey.response.items():
+    print(name + '：' + value)
+    
+
+
+
+
+
+
+________________________________________________________________________________________________
+
+
+
+练习-那个男人来了-参考
+练习目标：
+这个练习，会训练你去运用“子类的继承和定制”相关知识。
+ 
+练习要求：
+在练习中，需要你通过代码的运行结果和所学知识，补全代码。
+在补全代码的过程中，需要对子类的继承和定制有清晰的认知。
+ 
+【讲解】
+明确目标很重要（所以重复三遍）。
+做到后面的步骤，可再点开左侧的“练习介绍”查看。
+ 
+根据结果，倒推代码
+请你补充右侧代码，让其运行结果如下：
+大家注意了！
+一个叫“吉多”的人来了。
+大家注意了！
+一个叫“范罗苏姆”的男人来了。
+大家注意了！
+那个叫“范罗苏姆”的男人留下了他的背影。
+ 
+【提示】
+几个提示：
+1.每次实例化都会打印“大家注意了！”，所以可以把它放在初始化函数中；
+2.父类的实例化有传入参数，子类的不用，说明继承时改造了初始化函数；
+3.子类比父类多了一种方法（因父类生成的对象无法调用），可知这个方法是在子类中新增的。
+
+
+
+
+
+class Person:
+    def __init__(self, name):
+        self.name = name
+        print('大家注意了！')
+
+
+    def show(self):
+        print('一个叫“%s”的人来了。' % self.name)
+
+
+class Man(Person):
+    def __init__(self):
+        Person.__init__(self, name='范罗苏姆')
+
+    def show(self):
+        print('一个叫“%s”的男人来了。' % self.name)
+
+
+    def leave(self):  # 子类定制新方法
+        print('那个叫“%s”的男人留下了他的背影。' % self.name)
+
+
+author1 = Person('吉多')
+author1.show()
+author2 = Man()
+author2.show()
+author3 = Man()
+author3.leave()
+
+
+
+
+________________________________________________________________________________________________
+
+
+class Teacher:
+    face = 'serious'
+    job = 'teacher'
+
+class Father:
+    face = 'sweet'
+    parenthood = 'dad'
+
+class TeacherMore(Teacher, Father):
+    pass
+
+class FatherMore(Father, Teacher):
+    face = 'gentle'
+
+time3 = TeacherMore()
+time4 = FatherMore()
+print(time3.face)
+print(time4.face)
+
+
+
+
+
+
+
+class Student:
+    def __init__(self, name, job=None, time=0.00, time_effective=0.00): 
+        self.name = name
+        self.job = job
+        self.time = time
+        self.time_effective = time_effective
+
+
+    def count_time(self, hour, rate):
+        self.time += hour
+        self.time_effective += hour * rate
+
+
+class Programmer(Student):
+    def __init__(self, name):
+        Student.__init__(self, name, job='programmer', time=0.00, time_effective=0.00)
+
+
+    def count_time(self, hour, rate=1):
+        Student.count_time(self, hour, rate)
+
+
+student1 = Student('韩梅梅')
+student2 = Programmer('李雷')
+print(student1.job)
+print(student2.job)
+student1.count_time(10, 0.8)
+student2.count_time(10)
+print(student1.time_effective)
+print(student2.time_effective)
+
+
+
+
+
+
+________________________________________________________________________________________________
+
+
+
+1.代码实验
+
+
+import random
+
+player_list = ['【圣光骑士】','【暗影刺客】','【精灵弩手】']
+players = []
+
+for i in range(3):
+    player = random.choice(player_list)
+    players.append(player)
+
+print(players)
+
+# 判断方式1：比较运算符
+
+# 角色类型都一样
+if players[0] == players[1] == players[2]:
+    print('我们都一样！——方式1')  # 在打印结果中加上“方式N”，验证不同的判断方式的有效性。
+
+# 角色类型都不一样
+if players[0] != players[1] and players[0] != players[2] and players[1] != players[2]:
+    print('我们都不一样！——方式1')
+
+# 判断方式2：set()
+# 集合（set）是一个无序的不重复元素序列，set()可以去重，然后生成一个集合。
+
+players_set = set(players)
+
+# 角色类型都一样&角色类型都不一样
+if len(players_set) == 1:
+    print('我们都一样！——方式2')
+elif len(players_set) == 3:
+    print('我们都不一样！——方式2')
+
+# 其他判断方式
+
+'''
+除了上面两种方式外，还有很多方式可以考虑：
+
+例如：类似判断方式2，可以新建一个列表，用 append 添加不重复的角色类型，然后看这个列表的长度是多少（类似判断方式2）。
+再如：“角色类型完全不一样”，可先将players和player_list按相同的排序方式排一下，再判断两个排序后的列表是否相同。
+
+
+总而言之：只要你愿意思考、尝试和搜索，就可以得出各种不同的判断方式。
+'''
+
+# 再举一个例子：
+if sorted(players) == sorted(player_list):
+    print('我们都不一样！——方式3')
+else:
+    pass
+
+
+
+
+2.加新功能
+
+
+
+# 查看新增的代码和注释
+
+
+import random
+import time
+
+
+# 创建一个类，可实例化成具体的游戏角色
+class Role:
+    def __init__(self, name):
+        self.name = name
+        self.life = random.randint(100,150)
+        self.attack = random.randint(30,50)
+
+
+# 创建3个子类，可实例化为3个不同的角色类型
+
+
+class Knight(Role):
+    def __init__(self, name = '【圣光骑士】'):
+        Role.__init__(self,name)
+        self.life = int(self.life*1.5)
+        self.attack = int(self.attack*0.8)
+
+
+    def fight_buff(self, opponent,str1,str2):
+        if opponent.name  == '【暗影刺客】':
+            self.attack = int(self.attack * 1.5)
+            print('『%s』【圣光骑士】对 『%s』【暗影刺客】说：“让无尽光芒制裁你的堕落！”'%(str1, str2))
+
+
+class Assassin(Role):
+    def __init__(self, name = '【暗影刺客】'):
+        Role.__init__(self,name)
+        self.life = int(self.life*0.8)
+        self.attack = int(self.attack*1.5)
+
+
+    # 角色类型克制关系
+    def fight_buff(self, opponent,str1,str2):
+        if opponent.name  == '【精灵弩手】':
+            self.attack = int(self.attack * 1.5)
+            print('『%s』【暗影刺客】对 『%s』【精灵弩手】说：“主动找死，就别怪我心狠手辣。”'%(str1, str2)) 
+
+
+class Bowman(Role):
+    def __init__(self, name = '【精灵弩手】'):
+        Role.__init__(self,name)
+        self.life = int(self.life*1.2)
+        self.attack = int(self.attack*1.2)
+
+
+    def fight_buff(self, opponent,str1,str2):
+        if opponent.name  == '【圣光骑士】':
+            self.attack = int(self.attack * 1.5)
+            print('『%s』【精灵弩手】对 『%s』【圣光骑士】说：“骑着倔驴又如何？你都碰不到我衣服。”'%(str1, str2))
+
+
+# 创建一个类，可生成3V3并展示：可分为：欢迎语→随机生成→展示角色
+class Game:
+    def __init__(self):
+        self.players = []
+        self.enemies = []
+        self.score = 0
+        self.i = 0
+        # 依次执行以下函数
+        self.game_start()  # 欢迎语
+        self.born_role()  # 随机生成6个角色
+        self.cooperat_role()  # 角色类型引起的属性加成
+        self.show_role()  # 展示角色
+        self.order_role()  # 排序并展示
+        self.pk_role()  # 让双方 Pk 并展示结果
+        self.show_result()  # 展示最终结局
+
+
+    # 欢迎语
+    def game_start(self):
+        print('------------ 欢迎来到“炼狱角斗场” ------------')
+        print('在昔日的黄昏山脉，奥卢帝国的北境边界上，有传说中的“炼狱角斗场”。')
+        print('鲜血与战斗是角斗士的归宿，金钱与荣耀是角斗士的信仰！')
+        print('今日，只要你【你的队伍】能取得胜利，你将获得一笔够花500年的财富。')
+        time.sleep(2)
+        print('将随机生成【你的队伍】和【敌人队伍】！')
+        input('\n狭路相逢勇者胜，请按任意键继续。\n')
+    
+    # 随机生成6个角色
+    def born_role(self):
+        for i in range(3):
+            self.players.append(random.choice([Knight(),Assassin(),Bowman()]))
+            self.enemies.append(random.choice([Knight(),Assassin(),Bowman()]))
+
+
+    # 判断是否满足角色类型配合的条件
+    def cooperat_role(self):
+        players_list = [self.players[0].name,self.players[1].name,self.players[2].name]
+        enemies_list = [self.enemies[0].name,self.enemies[1].name,self.enemies[2].name]
+        players_set = set(players_list)
+        enemies_set = set(enemies_list)
+        # print(players_list)  # 这几行是验证代码，正式代码里会删掉。感兴趣的话，可取消注释后一起运行。
+        # print(players_set)
+        # print(enemies_list)
+        # print(enemies_set)
+        if len(players_set) == 1:
+            print('我方触发了“角色类型一致”的条件，每个角色的血量增加25%。')
+            for i in range(3):
+                self.players[i].life = int(self.players[i].life * 1.25)
+        if len(players_set) == 3:
+            print('我方触发了“角色类型兼备”的条件，每个角色的攻击增加25%。')
+            for i in range(3):
+                self.players[i].attack = int(self.players[i].attack * 1.25)
+        if len(enemies_set) == 1:
+            print('敌方触发了“角色类型一致”的条件，每个角色的血量增加25%。')
+            for i in range(3):
+                self.enemies[i].life = int(self.enemies[i].life * 1.25)
+        if len(enemies_set) == 3:
+            print('敌方触发了“角色类型兼备”的条件，每个角色的攻击增加25%。')
+            for i in range(3):
+                self.enemies[i].attack = int(self.enemies[i].attack * 1.25)
+        input('请按任意键，查看【你的队伍】和【敌人队伍】的角色信息：')  # 缓一缓，再展示。
+
+
+
+    # 展示角色
+    def show_role(self):
+        print('----------------- 角色信息 -----------------')
+        print('你的队伍：')
+        for i in range(3):
+            print( '『我方』%s 血量：%s  攻击：%s'%
+            (self.players[i].name,self.players[i].life,self.players[i].attack))
+        print('--------------------------------------------')
+
+
+        print('敌人队伍：')
+        for i in range(3):
+            print('『敌方』%s 血量：%s  攻击：%s'%
+            (self.enemies[i].name,self.enemies[i].life,self.enemies[i].attack))
+        print('--------------------------------------------')
+        input('请按回车键继续。\n')
+
+
+
+
+    # 排序并展示
+    def order_role(self):
+        order_dict = {}
+        i=0
+        while i < 3:
+            order = int(input('你想将 %s 排在第几个上场？（输入数字1-3）'%(self.players[i].name)))
+            if order in [1,2,3]:
+                if order in order_dict:
+                    print('你输入了重复的数字，请重新输入：')
+                else:
+                    order_dict[order] = self.players[i]
+                    i += 1
+            else:
+                print('输入有误，请输入1或2或3：')
+        self.players = []
+        for i in range(1,4):
+            self.players.append(order_dict[i]) 
+        print('\n你的队伍出场顺序是：%s、%s、%s'
+        %(self.players[0].name,self.players[1].name,self.players[2].name))
+        print('敌人队伍出场顺序是：%s、%s、%s'
+        %(self.enemies[0].name,self.enemies[1].name,self.enemies[2].name))
+
+
+
+
+
+    # 让双方 Pk 并展示结果
+    def pk_role(self):
+        for i in range(3):
+            print('\n----------------- 【第%s轮】 -----------------' % (i+1))
+            # 每一局开战前加buff
+            self.players[i].fight_buff(self.enemies[i],'我方','敌方')
+            self.enemies[i].fight_buff(self.players[i],'敌方','我方')
+            input('\n战斗双方准备完毕，请按回车键继续。')
+            print('--------------------------------------------')
+    
+            while self.players[i].life >0 and self.enemies[i].life>0:
+                self.enemies[i].life -= self.players[i].attack
+                self.players[i].life -= self.enemies[i].attack
+                print('我方%s 发起了攻击，敌方%s 剩余血量 %s'%
+                (self.players[i].name,self.enemies[i].name,self.enemies[i].life))
+                print('敌方%s 发起了攻击，我方%s 剩余血量 %s'%
+                (self.enemies[i].name,self.players[i].name,self.players[i].life))
+                print('--------------------------------------------')
+                time.sleep(1)
+            if self.players[i].life <= 0 and self.enemies[i].life> 0:
+                print('\n很遗憾，我方%s 挂掉了！'% (self.players[i].name))
+                self.score -= 1
+            elif self.players[i].life >0 and self.enemies[i].life<= 0: 
+                print('\n恭喜，我方%s 活下来了。'% (self.players[i].name))
+                self.score += 1
+            else:
+                print('\n我的天，他们俩都死了啊！')
+
+
+
+
+    # 展示最终结局
+    def show_result(self):
+        input('\n请按回车查看最终结果。\n')
+        if self.score >0:
+            print('【最终结果】\n你赢了，最终的财宝都归你了！')
+        elif self.score == 0:
+            print('【最终结果】\n你没有胜利，但也没有失败，在夜色中灰溜溜离开了奥卢帝国。')
+        else:
+            print('【最终结果】\n你输了。炼狱角斗场又多了几具枯骨。')
+
+
+game = Game()
+
+
+
+
+
+________________________________________________________________________________________________
+
+
+练习目标
+通过这个练习，优化项目3中排序部分的代码。
+ 
+练习要求
+项目3中的排序，3次输入必须包含1、2、3，否则就会报错（下面可以体验）。
+为了避免由于输错而产生的报错，我们可以在原有代码的基础上做一些优化，让程序自动提示，并且能够多次输入，直到成功排序为止。
+ 
+【讲解】
+ 
+明确目标很重要（所以重复三遍）。
+做到后面的步骤，可再点开左侧的“练习介绍”查看。
+ 
+发现问题
+请你运行代码3次，在排序时分别输入：
+第一次输入：1→2→3
+第二次输入：1→2→2
+第三次输入：4→5→6
+后面两种输入会报错，你可以想一想为什么会报错以及如何避免这个错误。
+ 
+解决方案
+对于解决方案，你有了大致的思路了吗？
+想一想以下的场景，你应该会有所启发：
+你在注册某APP账号时，假设密码不符合要求，会跳出一个提示说：密码只能是……
+当你两次输入的密码不一致时，又会跳出一个提示说：你输入的密码不一致。
+同理，我们可以优化一下排序的代码：
+当输入的不是123中的某个数字，就跳出提示；当输入的是重复的数字，也跳出提示。
+这样，问题得解决，代码得优化。
+ 
+【提示】
+1.要保证每个数字都输入了，可用 while 循环判断：每输入一个123中不重复的数字，就记一次有效，需要有效3次；
+2.要验证某个元素是否在列表里，可用'if a in list1:'。
+ 
+
+
+
+import random
+
+
+player_list =  ['【狂血战士】','【森林箭手】','【光明骑士】','【独行剑客】','【格斗大师】','【枪弹专家】']
+players = random.sample(player_list,3)  
+order_dict = {}
+
+
+i=0
+while i < 3:
+    order = int(input('你想将 %s 排在第几个上场？（输入数字1-3）'%(players[i])))
+    if order in [1,2,3]:
+        if order in order_dict:
+            print('你输入了重复的数字，请重新输入：')
+        else:
+            order_dict[order] = players[i]
+            i += 1
+    else:
+        print('输入有误，请输入1或2或3：')  # 报错2
+
+
+players = []
+for i in range(1,4):
+    players.append(order_dict[i]) 
+print('\n我方角色的出场顺序是：%s %s %s\n' % (players[0],players[1],players[2]))
+
+
+
+
+
+
+
+________________________________________________________________________________________________
+
+
+
+class Book:
+ 
+    def __init__(self, name, author, comment, state = 0):
+        self.name = name
+        self.author = author
+        self.comment = comment
+        self.state = state
+ 
+# 创建一个Book类的子类 FictonBook
+
+
+class FictonBook(Book):
+    def __init__(self, name, author, comment, state = 0, type = '虚构类'):
+        Book.__init__(self, name, author, comment, state = 0)
+        self.type = type
+
+
+    def __str__(self):
+        status = '未借出'
+        if self.state == 1:
+            status = '已借出'
+        return '类型：%s 名称：《%s》 作者：%s 推荐语：%s\n状态：%s ' % (self.type, self.name, self.author, self.comment, status)
+
+
+
+
+book = FictonBook('囚鸟','冯内古特','我们都是受困于时代的囚鸟')
+print(book)
+
+
+________________________________________________________________________________________________
+
+
+
+class Book:
+ 
+    def __init__(self, name, author, comment, state = 0):
+        self.name = name
+        self.author = author
+        self.comment = comment
+        self.state = state
+ 
+    def __str__(self):
+        status = '未借出'
+        if self.state == 1:
+            status = '已借出'
+        return '名称：《%s》 作者：%s 推荐语：%s\n状态：%s ' % (self.name, self.author, self.comment, status)
+ 
+class BookManager:
+
+
+    authors = []
+    def __init__(self):
+        book1 = Book('撒哈拉的故事','三毛','我每想你一次，天上便落下一粒沙，从此便有了撒哈拉。')
+        book2 = Book('梦里花落知多少','三毛','人人都曾拥有荷西，虽然他终会离去。')
+        book3 = Book('月亮与六便士','毛姆','满地都是六便士，他却抬头看见了月亮。')
+        self.books = [book1,book2,book3]
+        self.authors.append(book1.author)
+        self.authors.append(book2.author)
+        self.authors.append(book3.author)
+ 
+    def menu(self):
+        while True:
+            print('1.查询书籍')
+            choice = int(input('请输入数字选择对应的功能：'))
+            if choice == 1:
+                self.show_author_book()
+            else:
+                print('感谢使用！')
+                break
+ 
+    def show_author_book(self):
+        author = input('请输入想查询作家的名称：')
+        if author in self.authors:
+            print(author + '的作品有：')
+            for book in self.books:
+                if book.author == author:
+                    print(book)
+        else:
+            print('很可惜，我们暂时没有收录这位作者的作品')
+
+
+manager = BookManager()
+manager.menu() 
+
+
+
+
+
+
+
+________________________________________________________________________________________________
+
+
+练习-数据转移中的变化-参考
+
+
+1.编码和解码
+
+
+# 1.分别使用gbk和utf-8编码自己的名字，并将其打印出来。
+print('吴枫'.encode('gbk'))
+print('吴枫'.encode('utf-8'))
+
+# 2.复制上一步得到的结果，进行解码，打印出你的名字（两次）。
+print(b'\xe5\x90\xb4\xe6\x9e\xab'.decode('utf-8'))
+
+# 3.使用gbk解码b'\xb7\xe7\xb1\xe4\xbf\xc6\xbc\xbc\xd3\xd0\xd2\xe2\xcb\xbc'，并打印出来。
+
+print(b'\xb7\xe7\xb1\xe4\xbf\xc6\xbc\xbc\xd3\xd0\xd2\xe2\xcb\xbc'.decode('gbk'))
+
+
+
+2.通过文件读写，复制图片
+
+
+# 先打开图片
+with open('photo1.png','rb') as file:  # 以“rb”模式打开图片
+    data = file.read()
+    with open('photo3.png','wb') as newfile:  # 以“wb”模式写入
+        newfile.write(data)
+
+
+
+
+2.在读写之间处理数据-2
+
+
+file1 = open('scores.txt','r',encoding='utf-8') 
+file_lines = file1.readlines() 
+file1.close()
+
+final_scores = []
+
+for i in file_lines:
+    data =i.split()
+    sum = 0  # 先把总成绩设为0
+    for score in data[1:]:  # 遍历列表中第1个数据和之后的数据
+        sum = sum + int(score)  # 然后依次加起来，但分数是字符串，所以要转换    
+    result = data[0]+str(sum)+'\n'  # 结果就是学生姓名和总分
+    print(result)
+    final_scores.append(result)
+
+print(final_scores)
+
+
+sum1 = open('winner.txt','w',encoding='utf-8') 
+sum1.writelines(final_scores)
+sum1.close()
+ 
+
+2.在读写之间处理数据-2
+
+
+
+file1 = open('winner.txt','r',encoding='utf-8') 
+file_lines = file1.readlines() 
+file1.close()
+
+dict_scores = {}
+list_scores = []
+final_scores = []
+
+# print(file_lines) 
+# print(len('\n'))
+
+# 打印结果为：['罗恩102\n', '哈利383\n', '赫敏570\n', '马尔福275\n']
+# 经过测试，发现'\n'的长度是1。所以，名字是“第0位-倒数第5位”，分数是“倒数第4位-倒数第二位”。
+# 再根据“左取右不取”，可知：name-[:-4],score-[-4:-1]
+
+for i in file_lines:  # i是字符串。
+    print(i)
+    name = i[:-4]  # 取出名字（注：字符串和列表一样，是通过偏移量来获取内部数据。）
+    score = int(i[-4:-1])  # 取出成绩
+    print(name)
+    print(score)
+    dict_scores[score] = name  # 将名字和成绩对应存为字典的键值对(注意：这里的成绩是键)
+    list_scores.append(score)
+
+# print(list_scores)
+list_scores.sort(reverse=True)  # reverse，逆行，所以这时列表降序排列，分数从高到低。
+# print(list_scores)
+
+for i in list_scores:
+    result = dict_scores[i] + str(i) + '\n'
+    # print(result)
+    final_scores.append(result)
+
+print(final_scores)  # 最终结果
+
+winner_new = open('winner_new.txt','w',encoding='utf-8') 
+winner_new.writelines(final_scores)
+winner_new.close()
+
+
+
+
+________________________________________________________________________________________________
+
+
+练习目标
+这个练习，会让你学会一种方法，可以直接修改原文件中的数据。
+ 
+
+练习要求
+语文老师将一些古诗存在txt文档里，一句一行。
+最近，他计划抽一些古诗，自己设置一些空来让学生默写。
+请你用代码帮老师完成这项工作（只要处理了一个文档，加上循环就能处理无数个文档了）。
+ 
+【讲解】
+明确目标很重要（所以重复三遍）。
+做到后面的步骤，可再点开左侧的“练习介绍”查看。
+我们以李商隐的《锦瑟》为例，这是原文档里的内容：
+ 
+锦瑟
+[唐] 李商隐
+ 
+锦瑟无端五十弦，
+一弦一柱思华年。
+庄生晓梦迷蝴蝶，
+望帝春心托杜鹃。
+沧海月明珠有泪，
+蓝田日暖玉生烟。
+此情可待成追忆，
+只是当时已惘然。
+ 
+老师在这首诗想考学生“一弦一柱思华年。”和“只是当时已惘然。”，即他想得到的是：
+ 
+锦瑟
+[唐] 李商隐
+ 
+锦瑟无端五十弦，
+____________。
+庄生晓梦迷蝴蝶，
+望帝春心托杜鹃。
+沧海月明珠有泪，
+蓝田日暖玉生烟。
+此情可待成追忆，
+____________。
+ 
+ 【提示】
+为了让代码逻辑简洁且便于更新，可以将需要默写的诗句都放到一个表格里。
+另外，当遇到默写诗句时，可以用英文的下划线去替代（____________）。
+
+
+
+
+
+
+
+list_test = ['一弦一柱思华年。\n','只是当时已惘然。\n']
+with open ('poem2.txt','r') as f:
+    lines = f.readlines()
+print(lines)
+with open('poem2.txt','w') as new:
+    for line in lines:
+        if line in list_test:
+            new.write('____________。\n')
+        else:
+            new.write(line)
+
+
+
+
+________________________________________________________________________________________________
+
+
+
+练习-时间记录器-参考
+
+
+
+import time
+
+input("欢迎使用“时间管理器”！请按回车继续。")
+
+while True:
+    task_name = input('请输入任务名：')
+    task_time = int(input('你觉得自己至少可以专注这个任务多少分钟？输入 N 分钟'))
+    input('此次任务信息：\n我要完成的任务：%s\n我至少要专注：%d分钟\n按回车开始计时：'%(task_name,task_time))
+    start = time.time()  # 开始计时
+    start_time = time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))  # 格式化日期
+    
+    # for t in range(task_time*60,0,-1):  # 实际代码：分钟转成秒要乘60，用-1来倒计时。
+    for t in range(task_time,0,-1):
+        info = '请专注任务，还要保持专注 ' + str(t) + ' 秒哦！'
+        print(info,end="")
+        print("\b"*(len(info)*2),end="",flush=True)
+        time.sleep(1)
+    print('你已经专注了 %d 分钟，很棒~再加把劲，完成任务！'%task_time)  # 倒计时后，才继续运行之后的代码。
+
+
+    # 询问任务是否完成
+    task_status = input('请在任务完成后按输入y:')
+    if task_status == 'y':
+        end = time.time()  # 一定用户按了 y，就记下结束时间。
+        end_time = time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))  # 日期格式化
+        actual_time = int((end -start)/60)  # 始末时间相减，从秒换算到分，除以60。
+        start_end = start_time + '——' + end_time + '\n'
+        with open('timelog3.txt','a', encoding = 'utf-8') as f:
+            f.write(task_name + ' 的预计时长为：' + str(task_time) + '分钟\n')
+            f.write(task_name + ' 的实际时长为：' + str(actual_time) + '分钟,具体时间为：' + start_end)
+        again = input('建立一个新任务请按 y, 退出时间日志记录器请按 q：')
+        if again == 'q':            
+            break
+    else:
+        print('抱歉，你的输入有误。请重启时间记录器。')
+
+print('愿被你善待的时光，予你美好的回赠。')
+
+
+
+
+
+
+________________________________________________________________________________________________
+
+
+练习-再出古诗默写题-参考
+
+ 
+练习目标
+通过这个练习，我们会用模块去实现上一关卡的选做题“古诗默写”。
+ 
+练习要求
+这个练习，我们会接触一个新的Python内置模块：os（文件/目录方法）。
+这个模块中的许多方法，配合文件读写以及数据处理，可以让一些工作得以自动化。
+当然，在一个练习里，我们不会奢求那么多，先体验一下os模块里的3个方法即可。
+ 
+【讲解】
+明确目标很重要（所以重复三遍）。
+做到后面的步骤，可再点开左侧的“练习介绍”查看。
+ 
+我们先回顾一下不用模块是如何出古诗默写题的
+ 
+【提示】
+os 模块中的替换方法
+可能你会觉得这么操作更麻烦，但假设要你处理大量的文档，模块会让你的代码更清晰更简洁。
+细心一些，你可以的！
+ 
+
+
+import os
+
+list_test = ['一弦一柱思华年。\n','只是当时已惘然。\n']
+
+with open ('poem2.txt','r') as f:
+
+    lines = f.readlines()
+
+with open('poem2_new.txt','w') as new:
+
+    for line in lines:
+
+        if line in list_test:
+
+            new.write('____________。\n')
+
+        else:
+
+            new.write(line)
+
+os.replace('poem_new.txt', 'poem1.txt')
+
+
+
+
+
+另外，建议你在本地编辑器试一试下面的这些方法：
+ 
+os.getcwd()  # 返回当前工作目录
+os.listdir(path)   # 返回path指定的文件夹包含的文件或文件夹的名字的列表
+os.mkdir(path)  # 创建文件夹
+os.path.abspath(path)   # 返回绝对路径
+os.path.basename(path)   # 返回文件名
+os.path.isfile(path)   # 判断路径是否为文件
+os.path.isdir(path)   # 判断路径是否为目录
+ 
+注： dir为单词directory（目录）的缩写。
+
+
+
+
+
+________________________________________________________________________________________________
+
+
+练习-自制动态二维码-参考
+
+
+
+
+# 先导入模块
+from MyQR import myqr
+
+
+myqr.run(
+    words='http://weixin.qq.com/r/kzlje9TEE4lsrZAY92yB',
+    # 扫描二维码后，显示的内容，或是跳转的链接
+    version=5,  # 设置容错率
+    level='H',  # 控制纠错水平，范围是L、M、Q、H，从左到右依次升高
+    picture='she-3.gif',  # 图片所在目录，可以是动图
+    colorized=True,  # 黑白(False)还是彩色(True)
+    contrast=1.0,  # 用以调节图片的对比度，1.0 表示原始图片。默认为1.0。
+    brightness=1.0,  # 用来调节图片的亮度，用法同上。
+    save_name='Python.gif',  # 控制输出文件名，格式可以是 .jpg， .png ，.bmp ，.gif
+    )
+    save_dir='指定二维码生成的地址，填写路径就行'
+
+
+
+
+
+
+
+
+________________________________________________________________________________________________
+
+
+练习-绝对值的多种求法-参考
+
+
+练习目标：
+通过这个练习，你至少可以用3种方法去求某个数的绝对值。
+ 
+练习要求：
+请你通过搜索和步骤中的提示，用不同的方法求绝对值。
+建议将其封装成函数，如“abs_value1()”。
+ 
+【讲解】
+明确目标很重要（所以重复三遍）。
+做到后面的步骤，可再点开左侧的“练习介绍”查看。
+ 
+ 
+挑战3种方法解题 
+ 
+请根据右侧的关键词提示以及网上搜索，用3种不同的方法求绝对值。
+ 
+【提示】
+内置函数为 abs()，内置模块为 math。
+ 
+注：绝对值的英文为 absolute value。
+ 
+
+
+
+import math
+
+
+def abs_value1():
+    a = float(input('1.请输入一个数字：'))
+    if a >= 0:
+        a = a
+    else:
+        a = -a
+    print('绝对值为：%f' % a)
+
+
+def abs_value2():
+    a = float(input('2.请输入一个数字：'))
+    a = abs(a)
+    print('绝对值为：%f' % a)
+
+
+def abs_value3():
+    a = float(input('3.请输入一个数字：'))
+    a = math.fabs(a)
+    print('绝对值为：%f' % a)
+
+
+abs_value1()
+abs_value2()
+abs_value3()
+
+
+
+
+
+________________________________________________________________________________________________
+
+
+
+练习-拯救选择困难症-参考
+
+
+
+# 帮你做选择之我要吃什么
+import random
+
+
+# 将需要用到的表格和变量放在开头
+list_food = ['KFC', '蒸菜馆', '楼下快餐店', '桂林米粉', '东北饺子', '金牌猪脚饭', '三及第汤饭']  # 备选菜单，可自定义。
+list_choice = []
+
+
+# 由于两个原因都包含判断过程，所以，为了让代码更简洁，可将其封装成函数。
+def choose(list):,
+    while True:
+        food = random.choice(list)
+        judgement = input('去吃【%s】好不好啊？同意的话输入y，不想吃直接回车即可。'%(food))
+        if judgement == 'y':
+            print('去吃【%s】！就这么愉快地决定啦！'%(food)) 
+            break
+
+
+# 判断环节
+reason = int(input('你不知道吃什么的原因是：1.完全不知道吃什么；2.在几家店之间徘徊（请输入1或2）：'))
+if reason == 1:
+    choose(list_food)
+elif reason == 2:
+    add = True
+    while add:
+        choice = input('请输入让你犹豫的店名（注：一家一家输，完成后输入y）：')
+        if choice != 'y':  # 这个判断语句，是为了不将 y 也添加到菜单里。
+            list_choice.append(choice)
+        if choice == 'y':
+            add = False
+    choose(list_choice)          
+else:
+    print('抱歉，目前还不支持第三种情况——不过，你可以加代码哦。')
+
+
+
+
+________________________________________________________________________________________________
+
+
+练习目标
+我们会通过今天的作业，用代码模拟一种现实中的场景：滚动的广告牌。
+ 
+练习要求
+实际生活中，有些广告牌是单行滚动的字体。
+这个练习会通过新旧知识的结合，用Python实现对这种效果的模拟。
+ 
+【讲解】
+明确目标很重要（所以重复三遍）。
+做到后面的步骤，可再点开左侧的“练习介绍”查看。
+ 
+提出产品需求，形成技术方案
+由于是练习，所以是没有让每个人根据自己的生活经验来提需求。
+而是直接给定了产品需求：用Python代码模拟单行的滚动广告。
+初步形成的技术方案是：print+字符串+循环+time模块（控制滚动速度）。
+ 
+【讲解】
+在这个需求下，稍稍分析即可得：
+广告显示：打印字符串；
+广告滚动：字符串的改变和循环（注：字符串和列表一样，可以用偏移量来提取数据）。另外，循环的速度影响滚动速度，可以用 time.sleep() 来控制。
+ 
+为了让这种模拟和实际的更接近，补充一个模块中的方法。
+请你试着运行右侧的代码，然后将其注释掉，再用代码完成对广告牌的模拟，广告词可以自己起。
+对了，正常的滚动广告是无限循环的。不过，你可以在代码中设置循环次数，只要保证效果即可。
+ 
+【提示】
+关键代码：
+`content = content[1:] + content[0]`
+
+
+
+
+
+
+import os, time
+
+def main():
+
+    content = ' 风变编程，陪你一起学Python '  # 广告词可自定义。
+
+    while True:
+
+        os.system('clear')
+
+        print(content)
+
+        content = content[1:] + content[0]
+
+        time.sleep(2)
+
+if __name__ == '__main__':  # 类里面学到的检测方法，在函数中其实也可以用。
+
+    main()
+
+
+
+
+
+________________________________________________________________________________________________
+
+
+
+
+
+
+
